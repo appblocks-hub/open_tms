@@ -3,8 +3,8 @@
   "name": "open_tms_backend",
   "type": "package",
   "source": {
-    "https": "https://github.com/uttahb/open_tms.git",
-    "ssh": "git@github.com:uttahb/open_tms.git",
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
     "branch": "block_open_tms_backend"
   },
   "parentBlockIDs": [

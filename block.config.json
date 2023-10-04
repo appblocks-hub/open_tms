@@ -3,13 +3,15 @@
   "type": "package",
   "blockId": "cjFjUTS-eRkzpj10RRol-",
   "source": {
-    "https": "",
-    "ssh": "",
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
     "branch": "block_open_tms"
   },
   "parentBlockIDs": [],
   "isPublic": true,
-  "supportedAppblockVersions": ["1.0.0"],
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
   "repoType": "mono",
   "dependencies": {
     "open_tms_backend": {
