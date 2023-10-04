@@ -1,0 +1,19 @@
+{
+  "blockId": "qL9xFyF94i48ou6GHbJLl",
+  "name": "open_tms_backend",
+  "type": "package",
+  "source": {
+    "https": "https://github.com/uttahb/open_tms.git",
+    "ssh": "git@github.com:uttahb/open_tms.git",
+    "branch": "block_open_tms_backend"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-"
+  ],
+  "repoType": "mono",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "dependencies": {}
+}

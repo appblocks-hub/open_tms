@@ -1,0 +1,19 @@
+{
+  "name": "open_tms",
+  "type": "package",
+  "blockId": "cjFjUTS-eRkzpj10RRol-",
+  "source": {
+    "https": "",
+    "ssh": "",
+    "branch": "block_open_tms"
+  },
+  "parentBlockIDs": [],
+  "isPublic": true,
+  "supportedAppblockVersions": ["1.0.0"],
+  "repoType": "mono",
+  "dependencies": {
+    "open_tms_backend": {
+      "directory": "open_tms_backend"
+    }
+  }
+}
