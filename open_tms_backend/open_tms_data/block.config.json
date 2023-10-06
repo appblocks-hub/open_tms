@@ -1,23 +1,21 @@
 {
-  "blockId": "qL9xFyF94i48ou6GHbJLl",
-  "name": "open_tms_backend",
-  "type": "package",
+  "blockId": "x2vc3hlnGg2fowEkO33p2",
+  "name": "open_tms_data",
+  "type": "shared-fn",
   "source": {
     "https": "https://github.com/appblocks-hub/open_tms.git",
     "ssh": "git@github.com:appblocks-hub/open_tms.git",
-    "branch": "block_open_tms_backend"
+    "branch": "block_open_tms_data"
   },
   "parentBlockIDs": [
-    "cjFjUTS-eRkzpj10RRol-"
+    "cjFjUTS-eRkzpj10RRol-",
+    "qL9xFyF94i48ou6GHbJLl"
   ],
   "repoType": "mono",
+  "language": "nodejs",
   "supportedAppblockVersions": [
     "1.0.0"
   ],
   "isPublic": true,
-  "dependencies": {
-    "open_tms_data": {
-      "directory": "open_tms_data"
-    }
-  }
+  "start": "node index.js"
 }
