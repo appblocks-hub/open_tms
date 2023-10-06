@@ -36,6 +36,7 @@ model organisation {
   organisation_created_by user?    @relation("organisation_created_by", fields: [created_by], references: [id])
   organisation_updated_by user?    @relation("organisation_updated_by", fields: [updated_by], references: [id])
   organisation_ticket_fk  ticket[] @relation("ticket_organisation_id")
+  organisation_process_fk  process[] @relation("process__organisation_id")
 }
 
 model user {
@@ -146,7 +147,6 @@ model roles {
   display_name String
   created_at   DateTime? @default(now())
   updated_at   DateTime? @updatedAt
-  member_id    String
 
   org_member_roles_fk org_member_roles[] @relation("org_member_roles_roles")
   department_users_fk department_users[] @relation("department_users_role_id")
@@ -187,6 +187,7 @@ model process {
   created_at      DateTime? @default(now())
   updated_at      DateTime? @updatedAt
 
+  process__organisation_id       organisation?     @relation("process__organisation_id", fields: [organisation_id], references: [id])
   process_created_by user? @relation("process_created_by", fields: [created_by], references: [id])
 
   process_updated_by user? @relation("process_updated_by", fields: [updated_by], references: [id])
