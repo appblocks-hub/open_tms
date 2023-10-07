@@ -26,6 +26,9 @@
     },
     "open_tms_reassign_ticket": {
       "directory": "open_tms_reassign_ticket"
+    },
+    "open_tms_close_ticket": {
+      "directory": "open_tms_close_ticket"
     }
   }
 }

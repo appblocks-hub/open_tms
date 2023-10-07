@@ -1,0 +1,21 @@
+{
+  "blockId": "S9Xu_45Uqa1Y-zcUoK14Y",
+  "name": "open_tms_close_ticket",
+  "type": "function",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_close_ticket"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-",
+    "qL9xFyF94i48ou6GHbJLl"
+  ],
+  "repoType": "mono",
+  "language": "nodejs",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "start": "node index.js"
+}
