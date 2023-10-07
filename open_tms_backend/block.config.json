@@ -17,6 +17,9 @@
     },
     "open_tms_create_ticket": {
       "directory": "open_tms_create_ticket"
+    },
+    "open_tms_update_ticket": {
+      "directory": "open_tms_update_ticket"
     }
   }
 }
