@@ -20,6 +20,9 @@
     },
     "open_tms_update_ticket": {
       "directory": "open_tms_update_ticket"
+    },
+    "open_tms_list_tickets": {
+      "directory": "open_tms_list_tickets"
     }
   }
 }
