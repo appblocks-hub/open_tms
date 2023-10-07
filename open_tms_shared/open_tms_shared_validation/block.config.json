@@ -1,0 +1,21 @@
+{
+  "blockId": "t0QQf0mph1CIGWrNIpGlK",
+  "name": "open_tms_shared_validation",
+  "type": "shared-fn",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_shared_validation"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-",
+    "NI46Jz8_O75JnoBzUkJBO"
+  ],
+  "repoType": "mono",
+  "language": "nodejs",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "start": "node index.js"
+}

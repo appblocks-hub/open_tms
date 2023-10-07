@@ -1,0 +1,22 @@
+{
+  "blockId": "NI46Jz8_O75JnoBzUkJBO",
+  "name": "open_tms_shared",
+  "type": "package",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_shared"
+  },
+  "parentBlockIDs": ["cjFjUTS-eRkzpj10RRol-"],
+  "repoType": "mono",
+  "supportedAppblockVersions": ["1.0.0"],
+  "isPublic": true,
+  "dependencies": {
+    "open_tms_shared_util": {
+      "directory": "open_tms_shared_util"
+    },
+    "open_tms_shared_validation": {
+      "directory": "open_tms_shared_validation"
+    }
+  }
+}
