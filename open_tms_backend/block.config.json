@@ -29,6 +29,9 @@
     },
     "open_tms_close_ticket": {
       "directory": "open_tms_close_ticket"
+    },
+    "open_tms_create_ticket_type": {
+      "directory": "open_tms_create_ticket_type"
     }
   }
 }
