@@ -1,0 +1,24 @@
+{
+  "blockId": "x4SaST3ASbxFtOYVDxzJR",
+  "name": "open_tms_auth_be_signup",
+  "type": "function",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_auth_be_signup"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-",
+    "SkXcbekh0cVzzZXSZpyUv"
+  ],
+  "repoType": "mono",
+  "language": "nodejs",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "start": "node index.js",
+  "version": "0.0.1",
+  "versionId": "A3vKCJlg0T9xDVSJio_Fm",
+  "variantOf": "A3vKCJlg0T9xDVSJio_Fm"
+}

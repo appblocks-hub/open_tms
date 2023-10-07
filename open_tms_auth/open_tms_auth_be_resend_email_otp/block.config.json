@@ -1,0 +1,24 @@
+{
+  "blockId": "Hn81-eliwYvckCE_2HJuG",
+  "name": "open_tms_auth_be_resend_email_otp",
+  "type": "function",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_auth_be_resend_email_otp"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-",
+    "SkXcbekh0cVzzZXSZpyUv"
+  ],
+  "repoType": "mono",
+  "language": "nodejs",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "start": "node index.js",
+  "version": "0.0.1",
+  "versionId": "VDiWT94FI5Cilurfh9obl",
+  "variantOf": "VDiWT94FI5Cilurfh9obl"
+}

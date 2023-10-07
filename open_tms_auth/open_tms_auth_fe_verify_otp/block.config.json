@@ -1,0 +1,25 @@
+{
+  "blockId": "nakw13OaK54907tZHOiuw",
+  "name": "open_tms_auth_fe_verify_otp",
+  "type": "ui-elements",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_auth_fe_verify_otp"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-",
+    "SkXcbekh0cVzzZXSZpyUv"
+  ],
+  "repoType": "mono",
+  "language": "js",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "start": "npx webpack-dev-server",
+  "build": "npx webpack",
+  "version": "0.0.1",
+  "versionId": "hfzUQlpXoTFOAYq2JwhU1",
+  "variantOf": "hfzUQlpXoTFOAYq2JwhU1"
+}

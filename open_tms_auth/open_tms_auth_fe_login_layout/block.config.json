@@ -1,0 +1,25 @@
+{
+  "blockId": "Ebpjg7VEa5E730ePc0nsk",
+  "name": "open_tms_auth_fe_login_layout",
+  "type": "ui-elements",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_auth_fe_login_layout"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-",
+    "SkXcbekh0cVzzZXSZpyUv"
+  ],
+  "repoType": "mono",
+  "language": "js",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "start": "npx webpack-dev-server",
+  "build": "npx webpack",
+  "version": "0.0.1",
+  "versionId": "2PvZeqnpn20Q3CVt_STf6",
+  "variantOf": "2PvZeqnpn20Q3CVt_STf6"
+}

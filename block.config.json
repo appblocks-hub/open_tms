@@ -9,13 +9,20 @@
   },
   "parentBlockIDs": [],
   "isPublic": true,
-  "supportedAppblockVersions": [
-    "1.0.0"
-  ],
+  "supportedAppblockVersions": ["1.0.0"],
   "repoType": "mono",
+  "middlewares": [
+    {
+      "executeOnBlocks": [],
+      "middlewaresList": ["open_tms_body_parser_middleware"]
+    }
+  ],
   "dependencies": {
     "open_tms_backend": {
       "directory": "open_tms_backend"
+    },
+    "open_tms_auth": {
+      "directory": "open_tms_auth"
     }
   }
 }

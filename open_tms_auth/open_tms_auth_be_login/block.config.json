@@ -1,0 +1,24 @@
+{
+  "blockId": "jOdqq2E4EjWxlqTG5a3PL",
+  "name": "open_tms_auth_be_login",
+  "type": "function",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_auth_be_login"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-",
+    "SkXcbekh0cVzzZXSZpyUv"
+  ],
+  "repoType": "mono",
+  "language": "nodejs",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "start": "node index.js",
+  "version": "0.0.1",
+  "versionId": "YumGbaI2P0VaspqnFXmVm",
+  "variantOf": "YumGbaI2P0VaspqnFXmVm"
+}

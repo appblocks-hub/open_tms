@@ -1,0 +1,69 @@
+{
+  "name": "open_tms_auth",
+  "type": "package",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_auth"
+  },
+  "dependencies": {
+    "open_tms_auth_fe_container": {
+      "directory": "open_tms_auth_fe_container"
+    },
+    "open_tms_auth_fe_login": {
+      "directory": "open_tms_auth_fe_login"
+    },
+    "open_tms_auth_fe_login_layout": {
+      "directory": "open_tms_auth_fe_login_layout"
+    },
+    "open_tms_auth_be_login": {
+      "directory": "open_tms_auth_be_login"
+    },
+    "open_tms_auth_fe_reset_password": {
+      "directory": "open_tms_auth_fe_reset_password"
+    },
+    "open_tms_auth_be_reset_password": {
+      "directory": "open_tms_auth_be_reset_password"
+    },
+    "open_tms_auth_be_verify_email": {
+      "directory": "open_tms_auth_be_verify_email"
+    },
+    "open_tms_auth_fe_verify_email": {
+      "directory": "open_tms_auth_fe_verify_email"
+    },
+    "open_tms_auth_be_send_otp_for_verification": {
+      "directory": "open_tms_auth_be_send_otp_for_verification"
+    },
+    "open_tms_auth_be_verify_otp": {
+      "directory": "open_tms_auth_be_verify_otp"
+    },
+    "open_tms_auth_fe_forgot_password": {
+      "directory": "open_tms_auth_fe_forgot_password"
+    },
+    "open_tms_auth_be_forgot_password": {
+      "directory": "open_tms_auth_be_forgot_password"
+    },
+    "open_tms_auth_be_signup": {
+      "directory": "open_tms_auth_be_signup"
+    },
+    "open_tms_auth_fe_signup": {
+      "directory": "open_tms_auth_fe_signup"
+    },
+    "open_tms_auth_fe_verify_otp": {
+      "directory": "open_tms_auth_fe_verify_otp"
+    },
+    "open_tms_auth_be_resend_email_otp": {
+      "directory": "open_tms_auth_be_resend_email_otp"
+    }
+  },
+  "blockId": "SkXcbekh0cVzzZXSZpyUv",
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-"
+  ],
+  "isPublic": true,
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "repoType": "mono",
+  "variantOf": "CdMRdg88bDzieEafeJSLg"
+}

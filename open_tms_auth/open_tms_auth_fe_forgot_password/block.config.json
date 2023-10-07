@@ -1,0 +1,25 @@
+{
+  "blockId": "87ngDSKYgDezZGR_jFC6o",
+  "name": "open_tms_auth_fe_forgot_password",
+  "type": "ui-elements",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_auth_fe_forgot_password"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-",
+    "SkXcbekh0cVzzZXSZpyUv"
+  ],
+  "repoType": "mono",
+  "language": "js",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "start": "npx webpack-dev-server",
+  "build": "npx webpack",
+  "version": "0.0.1",
+  "versionId": "vm0intLRV3D7h-KjWuvTE",
+  "variantOf": "vm0intLRV3D7h-KjWuvTE"
+}

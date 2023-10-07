@@ -1,0 +1,21 @@
+{
+  "name": "open_tms_auth_be_verify_email",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js --port=3000"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "hbs": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "16.9.6",
+    "standard-version": "^9.5.0"
+  }
+}

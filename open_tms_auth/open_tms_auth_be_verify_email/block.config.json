@@ -1,0 +1,24 @@
+{
+  "blockId": "Axb8maf0zumUgWp2bQ2pB",
+  "name": "open_tms_auth_be_verify_email",
+  "type": "function",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_auth_be_verify_email"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-",
+    "SkXcbekh0cVzzZXSZpyUv"
+  ],
+  "repoType": "mono",
+  "language": "nodejs",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "start": "node index.js",
+  "version": "0.0.1",
+  "versionId": "X53121Vg7by8-R3SbB_qw",
+  "variantOf": "X53121Vg7by8-R3SbB_qw"
+}

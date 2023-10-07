@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .default {
+        --color-text-base:#000000;
+        --color-text-muted:#484848;
+        --color-text-inverted:#FFFFFF;
+        --color-primary:#5E5EDD;
+        --color-accent:#D453B6;
+        --color-success: #01944C;
+        --color-error:#EB0000;
+        --color-disabled:#C2C2C2;
+    }
+}
