@@ -1,0 +1,22 @@
+{
+  "blockId": "vjF7scrTsGTF9inP3cCR7",
+  "name": "open_tms_middleware",
+  "type": "package",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_middleware"
+  },
+  "parentBlockIDs": ["cjFjUTS-eRkzpj10RRol-"],
+  "repoType": "mono",
+  "supportedAppblockVersions": ["1.0.0"],
+  "isPublic": true,
+  "dependencies": {
+    "open_tms_auth_middleware": {
+      "directory": "open_tms_auth_middleware"
+    },
+    "open_tms_body_parser_middleware": {
+      "directory": "open_tms_body_parser_middleware"
+    }
+  }
+}

@@ -29,6 +29,9 @@
     },
     "open_tms_data": {
       "directory": "open_tms_data"
+    },
+    "open_tms_middleware": {
+      "directory": "open_tms_middleware"
     }
   }
 }
