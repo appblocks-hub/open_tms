@@ -41,6 +41,9 @@
     },
     "open_tms_create_organisation": {
       "directory": "open_tms_create_organisation"
+    },
+    "open_tms_create_department": {
+      "directory": "open_tms_create_department"
     }
   }
 }
