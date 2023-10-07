@@ -32,6 +32,9 @@
     },
     "open_tms_create_ticket_type": {
       "directory": "open_tms_create_ticket_type"
+    },
+    "open_tms_update_ticket_type": {
+      "directory": "open_tms_update_ticket_type"
     }
   }
 }
