@@ -44,6 +44,9 @@
     },
     "open_tms_create_department": {
       "directory": "open_tms_create_department"
+    },
+    "open_tms_get_ticket_activity_logs": {
+      "directory": "open_tms_get_ticket_activity_logs"
     }
   }
 }
