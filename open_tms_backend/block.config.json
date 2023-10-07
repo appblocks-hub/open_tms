@@ -14,13 +14,10 @@
   "middlewares": [
     {
       "executeOnBlocks": [],
-      "middlewaresList": ["open_tms_middleware", "open_tms_auth_middleware"]
+      "middlewaresList": ["open_tms_auth_middleware"]
     }
   ],
   "dependencies": {
-    "open_tms_data": {
-      "directory": "open_tms_data"
-    },
     "open_tms_create_ticket": {
       "directory": "open_tms_create_ticket"
     },
@@ -53,15 +50,6 @@
     },
     "open_tms_get_ticket_activity_logs": {
       "directory": "open_tms_get_ticket_activity_logs"
-    },
-    "open_tms_shared": {
-      "directory": "open_tms_shared"
-    },
-    "open_tms_auth_middleware": {
-      "directory": "open_tms_auth_middleware"
-    },
-    "open_tms_middleware": {
-      "directory": "open_tms_middleware"
     }
   }
 }
