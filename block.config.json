@@ -26,6 +26,9 @@
     },
     "open_tms_shared": {
       "directory": "open_tms_shared"
+    },
+    "open_tms_data": {
+      "directory": "open_tms_data"
     }
   }
 }

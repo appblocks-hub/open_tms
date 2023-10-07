@@ -1,0 +1,23 @@
+{
+  "blockId": "3_wk8Cw2m_bSPln2GJaZc",
+  "name": "open_tms_data",
+  "type": "package",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_data"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-"
+  ],
+  "repoType": "mono",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "dependencies": {
+    "open_tms_data_prisma": {
+      "directory": "open_tms_data_prisma"
+    }
+  }
+}
