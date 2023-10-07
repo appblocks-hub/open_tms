@@ -7,17 +7,16 @@
     "ssh": "git@github.com:appblocks-hub/open_tms.git",
     "branch": "block_open_tms_backend"
   },
-  "parentBlockIDs": [
-    "cjFjUTS-eRkzpj10RRol-"
-  ],
+  "parentBlockIDs": ["cjFjUTS-eRkzpj10RRol-"],
   "repoType": "mono",
-  "supportedAppblockVersions": [
-    "1.0.0"
-  ],
+  "supportedAppblockVersions": ["1.0.0"],
   "isPublic": true,
   "dependencies": {
     "open_tms_data": {
       "directory": "open_tms_data"
+    },
+    "open_tms_create_ticket": {
+      "directory": "open_tms_create_ticket"
     }
   }
 }
