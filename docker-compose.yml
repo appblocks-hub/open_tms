@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - '5432:5432'
+
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    ports:
+      - '6379:6379'
+
+  app:
+    build: .
+    working_dir: $home/app/preview
+    command:
+      - sh
+      - -c
+      - |
+        bb start -bo -env preview -pm2
+        cd ./auth_be_shared
+        npx prisma db push
+        npx prisma generate
+        tail -f /dev/null
+    ports:
+      - 5000:5000
+    volumes:
+      - ./:$home/app/preview
+    depends_on:
+      - postgres
+      - redis
