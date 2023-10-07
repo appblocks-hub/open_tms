@@ -26,7 +26,9 @@ node prisma/seed.js
 This will set up the database in your local machine with seed data.
 
 ## Contributing Process
-1. Check the issue you are working on and refer to the issue description to understand the intended workflow.
-2. Understand the database schema and function block requirements.
-3. Complete the task and perform a git push.
-4. Raise a pull request against the original repository's main branch.
+1. Identify an issue you want to work on and check [here](https://github.com/appblocks-hub/challenges) to see if the issue is still unassigned
+2. Ask in the issue comment for getting the task assigned to you
+3. Check the issue you are working on and refer to the issue description to understand the intended workflow.
+4. Understand the database schema and function block requirements.
+5. Complete the task and perform a git push.
+6. Raise a pull request against the original repository's main branch.
