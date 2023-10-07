@@ -32,6 +32,9 @@
     },
     "open_tms_middleware": {
       "directory": "open_tms_middleware"
+    },
+    "open_tms_frontend": {
+      "directory": "open_tms_frontend"
     }
   }
 }

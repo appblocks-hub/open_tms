@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentication</title>
+    <link rel="preload" href="https://fonts.googleapis.com" />
+    <link rel="preload" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+        theme: {
+          extend: {
+            colors: {
+              primary: '#010101',
+              secondary: '#D9D9D9',
+              tertiary: '#75EF42',
+              error: '#EB5757',
+              success: '#27AE60',
+              info: '#2F80ED',
+              warning: '#E2B93B',
+              'black-variant-1': '#1D1D1D',
+              'black-variant-2': '#282828',
+              'black-variant-3': '#252C32',
+              'black-variant-4': '#262A41',
+              'black-variant-5': '#191D23',
+              'gray-variant-1': '#333333',
+              'gray-variant-2': '#4F4F4F',
+              'gray-variant-3': '#828282',
+              'gray-variant-4': '#BDBDBD',
+              'gray-variant-5': '#E0E0E0',
+              'gray-variant-6': '#E8E8E8',
+              'blue-variant-1': '#4787BE',
+            },
+            borderRadius: {
+              5: '5px',
+            },
+          },
+        },
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer components {
+        .carousel .carousel_title {
+          @apply text-[40px] font-semibold leading-[44px] text-white whitespace-nowrap mb-5 mt-5;
+        }
+        .carousel .carousel_description {
+          @apply text-base font-normal leading-[26px] text-white  mb-[60px] max-w-[356px] mx-auto;
+        }
+        .side-bar ul {
+          @apply m-0 p-0 max-w-[342px] pr-9;
+        }
+        .side-bar li {
+          @apply m-0 p-0 mb-[30px] flex justify-between items-center;
+        }
+
+        .side-bar .badge {
+          @apply bg-tertiary min-w-[17px] h-[17px] flex justify-center items-center rounded-full text-xs font-normal leading-5 px-[5px];
+        }
+        .side-bar .list-items {
+          @apply flex items-center gap-5 text-gray-variant-3 text-lg font-medium leading-9;
+        }
+        .side-bar .ul-after-animate {
+          padding-right: 0 !important;
+        }
+        .side-bar .ul-after-animate li {
+          @apply mb-11 flex justify-center;
+        }
+        .side-bar .ul-after-animate .list-items {
+          padding-left: 0 !important;
+        }
+        .side-bar .list-items:hover .not-active {
+          display: none !important;
+        }
+        .side-bar .list-items:hover .is-active {
+          display: block !important;
+        }
+        .side-bar .list-items:hover {
+          @apply text-white cursor-pointer;
+        }
+        .side-bar .active .list-items {
+          @apply text-white;
+        }
+        .side-bar .active .not-active {
+          display: none !important;
+        }
+        .side-bar .not-active {
+          display: block !important;
+        }
+        .side-bar .active .is-active {
+          display: block !important;
+        }
+        .side-bar .is-active {
+          display: none !important;
+        }
+      }
+      .infinite-rotate {
+        animation: rotation 1s infinite linear;
+      }
+      .signature-font {
+        font-family: satisfy !important;
+      }
+
+      @keyframes rotation {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .carousel .image {
+        width: 204px !important;
+        height: 195px !important;
+      }
+      .carousel .dot {
+        background-color: white !important;
+        opacity: 1 !important;
+      }
+      .carousel .dot:hover {
+        background-color: #75ef42 !important;
+        opacity: 0.3 !important;
+      }
+      .carousel .dot.selected {
+        background-color: #75ef42 !important;
+      }
+      .otp-field-input > div {
+        gap: 12px;
+      }
+      .otp-field-input > div input:focus-visible {
+        outline: none !important;
+        border: 1px solid #4787be !important;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      /* Firefox */
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+
+      .no-border-last:last-child {
+        border-width: 0 !important;
+      }
+
+      /* scrollbar */
+      ::-webkit-scrollbar {
+        width: 7px;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 100px;
+        background-color: #e2e2e2;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #010101;
+        border-radius: 100px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #010101;
+      }
+      .bg-gradient-open_ab {
+        background: linear-gradient(132.04deg, #101010 9.94%, #333d33 79.51%);
+      }
+      .bg-gradient-open_ab-secondary {
+        background: linear-gradient(109.58deg, #101010 67.48%, #333d33 94.51%);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root" style="font-family: 'Inter', sans-serif"></div>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "blockId": "7BUJzy2uQOSMGakH_lAzS",
+  "name": "open_tms_container",
+  "type": "ui-container",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_container"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-",
+    "UsYSDVgsCFVLwj3cBOImc"
+  ],
+  "repoType": "mono",
+  "language": "js",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "start": "npx webpack-dev-server",
+  "build": "npx webpack"
+}
