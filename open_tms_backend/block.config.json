@@ -38,6 +38,9 @@
     },
     "open_tms_delete_ticket_type": {
       "directory": "open_tms_delete_ticket_type"
+    },
+    "open_tms_create_organisation": {
+      "directory": "open_tms_create_organisation"
     }
   }
 }
