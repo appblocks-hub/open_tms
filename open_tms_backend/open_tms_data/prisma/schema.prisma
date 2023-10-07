@@ -32,11 +32,11 @@ model organisation {
 
   org_member_fk org_member[] @relation("org_member_organisation_id")
 
-  organisation_tenant_id  tenant?  @relation("organisation_tenant_id", fields: [tenant_id], references: [id])
-  organisation_created_by user?    @relation("organisation_created_by", fields: [created_by], references: [id])
-  organisation_updated_by user?    @relation("organisation_updated_by", fields: [updated_by], references: [id])
-  organisation_ticket_fk  ticket[] @relation("ticket_organisation_id")
-  organisation_process_fk  process[] @relation("process__organisation_id")
+  organisation_tenant_id  tenant?   @relation("organisation_tenant_id", fields: [tenant_id], references: [id])
+  organisation_created_by user?     @relation("organisation_created_by", fields: [created_by], references: [id])
+  organisation_updated_by user?     @relation("organisation_updated_by", fields: [updated_by], references: [id])
+  organisation_ticket_fk  ticket[]  @relation("ticket_organisation_id")
+  organisation_process_fk process[] @relation("process__organisation_id")
 }
 
 model user {
@@ -91,7 +91,7 @@ model user_email {
 
   user_email_user_id user @relation("user_email_user_id", fields: [user_id], references: [id])
 
-  @@unique([email, email_type], name: "emailIdentifier")
+  @@unique([email], name: "emailIdentifier")
 }
 
 model user_authentication_info {
@@ -150,6 +150,9 @@ model roles {
 
   org_member_roles_fk org_member_roles[] @relation("org_member_roles_roles")
   department_users_fk department_users[] @relation("department_users_role_id")
+
+  @@unique([display_name], name: "display_name_unique_index")
+  @@unique([name], name: "name_unique_index")
 }
 
 model department {
@@ -187,8 +190,8 @@ model process {
   created_at      DateTime? @default(now())
   updated_at      DateTime? @updatedAt
 
-  process__organisation_id       organisation?     @relation("process__organisation_id", fields: [organisation_id], references: [id])
-  process_created_by user? @relation("process_created_by", fields: [created_by], references: [id])
+  process__organisation_id organisation? @relation("process__organisation_id", fields: [organisation_id], references: [id])
+  process_created_by       user?         @relation("process_created_by", fields: [created_by], references: [id])
 
   process_updated_by user? @relation("process_updated_by", fields: [updated_by], references: [id])
 

@@ -1,11 +1,14 @@
 import { PrismaClient } from '@prisma/client';
-import superAdmin from './seeder/initial.seed.js';
+import {createUser,createPredefinedRoles} from './seeder/initial.seed.js';
 
 
 const prisma = new PrismaClient();
 
 async function main() {
-  await superAdmin(prisma);
+  // await createPredefinedRoles(prisma)
+    await createUser(prisma);
+
+ // await superAdmin(prisma);
   // await processAndOffers(prisma);
   // await agreements(prisma);
 }
