@@ -73,8 +73,6 @@ model user {
   ticket_activity_created_by_fk             ticket_activity[]             @relation("ticket_activity_created_by")
   ticket_activity_updated_by_fk             ticket_activity[]             @relation("ticket_activity_updated_by")
 
-  department_users_fk department_users[] @relation("department_users_user_id")
-
   org_member_roles_fk org_member_roles[] @relation("org_member_roles_user")
 
   user_email_user_id_fk       user_email[]               @relation("user_email_user_id")
@@ -108,8 +106,8 @@ model user_authentication_info {
 //table used for entities which can be assigned a ticket.This is a link table
 model org_member {
   id              String    @id @default(uuid())
-  name            String
-  display_name    String
+  name            String?
+  display_name    String?
   type            Int // to determine the type of entity.1 for user and 2 for department
   created_by      String?
   updated_by      String?
@@ -125,7 +123,10 @@ model org_member {
 
   org_member_roles_fk           org_member_roles[] @relation("org_member_roles_id")
   org_member_department_fk      department[]       @relation("department_id")
+   org_member_department_users_fk      department_users[]       @relation("department_users_org_member_id")
   org_member_ticket_activity_fk ticket_activity[]  @relation("ticket_activity_assignee_id")
+  
+
 }
 
 model org_member_roles {
@@ -157,7 +158,8 @@ model roles {
 
 model department {
   id         String    @id
-  name       String?
+  name       String
+  display_name String
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt
 
@@ -167,15 +169,15 @@ model department {
 
 model department_users {
   id            String  @id @default(uuid())
-  user_id       String?
+  org_member_id String
   role_id       String?
   department_id String?
 
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt
 
-  department_users_user_id_fk user?  @relation("department_users_user_id", fields: [user_id], references: [id])
-  department_users_role_id_fk roles? @relation("department_users_role_id", fields: [role_id], references: [id])
+  department_users_org_member_id_fk org_member @relation("department_users_org_member_id", fields: [org_member_id], references: [id])
+  department_users_role_id_fk roles?      @relation("department_users_role_id", fields: [role_id], references: [id])
 
   department_users_department_id_fk department? @relation("department_users_department_id", fields: [department_id], references: [id])
 }
