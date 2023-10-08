@@ -19,7 +19,6 @@ docker-compose up
 cd backend/open_tms_data
 prisma generate
 prisma migrate dev
-prisma
 node prisma/seed.js
 
 ```
