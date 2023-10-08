@@ -315,28 +315,3 @@ model ticket_activity {
   ticket_activity_ticket_revision_id ticket_revision? @relation("ticket_activity_ticket_revision_id", fields: [ticket_revision_id], references: [id], onDelete: Cascade)
 }
 
-//Workflows 
-// Tenant insert will be predefined by the backend db.As of now 1 tenant can only have 1 super admin
-
-//Creating organisation
-// Before inserting organisation and user member has to to inserted.So member type 1 will be organisation and member type 2 will be user
-// Organisation can have multiple types.So while creating an organisation insert into organisation table and also insert into organisation types table
-// For organisation types table type 1 means super admin ,2 means bank, 3 means general contractor (GC), 4 means sub contractor (SC)
-
-//creating users
-//While creating users insert first into member with type 2.Then insert into users table.Then insert into userEmails and user authentication info table 
-
-//creating process
-//Insert into process table with the name,display_name and the audit data(created_at,updated_at,created_by,updated_by)
-//Create multiple stages for the process by inserting into stages with name,display_name, process_id,is_star,is_end ( for starting stage and ending stages) as the foreign key and also the audit data
-//Insert into process paths table with the name,display_name,from_stage and to_stage as foreign keys as well as audit data
-
-// First create a ticket by inserting into tickets table with audit data as well as status 1(open)
-// Then create a ticket revision by inserting into ticket revision with ticket_id as well as process_id as foreign keys and status and audit data
-// as well as a payload (json column) for storing arr specific data
-//Then for every activity that takes place on the ticket insert into ticket_activity table with ticket_revision_id,assignee_id,current_stage as foreign keys as well as audit data.
-// When ticket is closed change the status of ticket revision to closed and thus ticket is closed
-
-// When the ticket has to go through a different process
-// create new ticket revision with the same old ticket_id as foreign key and activity log
-// then create ticket activites with the newly created ticket_revision_id as foreign key.

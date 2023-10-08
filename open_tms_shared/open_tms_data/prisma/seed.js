@@ -10,9 +10,6 @@ async function main() {
   await inviteMemberUsersToOrganisation(prisma)
   await createDepartmentsAndAddUsers(prisma)
 
-  // await superAdmin(prisma);
-  // await processAndOffers(prisma);
-  // await agreements(prisma);
 }
 
 main()
