@@ -75,34 +75,23 @@ model user {
 
   org_member_roles_fk org_member_roles[] @relation("org_member_roles_user")
 
-  user_email_user_id_fk       user_email[]               @relation("user_email_user_id")
-  user_user_authentication_fk user_authentication_info[] @relation("user_authentication_info_user_id")
+ user_account_user_id_fk user_account[] @relation("user_account_user_id")
 }
 
-model user_email {
-  id         String    @id @default(uuid())
-  email      String
-  email_type Int // 0 primary 1 secondary
-  created_at DateTime? @default(now())
-  updated_at DateTime? @updatedAt
-  user_id    String
+model user_account {
+ id String @id @default(uuid())
+ email String
+ provider Int // 0 password 1 google
+ password_hash String?
+ password_salt String?
+ created_at DateTime? @default(now())
+ updated_at DateTime? @updatedAt
+ user_id String
 
-  user_email_user_id user @relation("user_email_user_id", fields: [user_id], references: [id])
+ user_account_user_id user @relation("user_account_user_id", fields: [user_id], references: [id])
 
-  @@unique([email], name: "emailIdentifier")
+ @@unique([email, provider], name: "emailIdentifier")
 }
-
-model user_authentication_info {
-  id            String    @id @default(uuid())
-  password_hash String?
-  password_salt String?
-  created_at    DateTime? @default(now())
-  updated_at    DateTime? @updatedAt
-  user_id       String
-
-  user_id_fk user @relation("user_authentication_info_user_id", fields: [user_id], references: [id])
-}
-
 //table used for entities which can be assigned a ticket.This is a link table
 model org_member {
   id              String    @id @default(uuid())
@@ -199,6 +188,7 @@ model process {
 
   stage_process_id_fk                 stage[]           @relation("stage_process_id")
   stage_ticket_revision_process_id_fk ticket_revision[] @relation("ticket_revision_process_id")
+  process_path_process_id_fk             process_path[]           @relation("process_path_process_id")
 }
 
 model stage {
@@ -238,6 +228,7 @@ model process_path {
   process_path_updated_by user?  @relation("process_path_updated_by", fields: [updated_by], references: [id])
   process_path_from_stage stage? @relation("process_path_from_stage", fields: [from_stage], references: [id])
   process_path_to_stage   stage? @relation("process_path_to_stage", fields: [to_stage], references: [id])
+  process_path_process_id                 process          @relation("process_path_process_id", fields: [process_id], references: [id])
 }
 
 model ticket_revision_attachments {
