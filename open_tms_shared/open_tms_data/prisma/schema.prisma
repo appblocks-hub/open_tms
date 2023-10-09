@@ -75,23 +75,24 @@ model user {
 
   org_member_roles_fk org_member_roles[] @relation("org_member_roles_user")
 
- user_account_user_id_fk user_account[] @relation("user_account_user_id")
+  user_account_user_id_fk user_account[] @relation("user_account_user_id")
 }
 
 model user_account {
- id String @id @default(uuid())
- email String
- provider Int // 0 password 1 google
- password_hash String?
- password_salt String?
- created_at DateTime? @default(now())
- updated_at DateTime? @updatedAt
- user_id String
+  id            String    @id @default(uuid())
+  email         String
+  provider      Int // 0 password 1 google
+  password_hash String?
+  password_salt String?
+  created_at    DateTime? @default(now())
+  updated_at    DateTime? @updatedAt
+  user_id       String
 
- user_account_user_id user @relation("user_account_user_id", fields: [user_id], references: [id])
+  user_account_user_id user @relation("user_account_user_id", fields: [user_id], references: [id])
 
- @@unique([email, provider], name: "emailIdentifier")
+  @@unique([email, provider], name: "emailIdentifier")
 }
+
 //table used for entities which can be assigned a ticket.This is a link table
 model org_member {
   id              String    @id @default(uuid())
@@ -110,12 +111,10 @@ model org_member {
 
   org_member_updated_by user? @relation("org_member_updated_by", fields: [updated_by], references: [id])
 
-  org_member_roles_fk           org_member_roles[] @relation("org_member_roles_id")
-  org_member_department_fk      department[]       @relation("department_id")
-   org_member_department_users_fk      department_users[]       @relation("department_users_org_member_id")
-  org_member_ticket_activity_fk ticket_activity[]  @relation("ticket_activity_assignee_id")
-  
-
+  org_member_roles_fk            org_member_roles[] @relation("org_member_roles_id")
+  org_member_department_fk       department[]       @relation("department_id")
+  org_member_department_users_fk department_users[] @relation("department_users_org_member_id")
+  org_member_ticket_activity_fk  ticket_activity[]  @relation("ticket_activity_assignee_id")
 }
 
 model org_member_roles {
@@ -146,11 +145,11 @@ model roles {
 }
 
 model department {
-  id         String    @id
-  name       String
+  id           String    @id
+  name         String
   display_name String
-  created_at DateTime? @default(now())
-  updated_at DateTime? @updatedAt
+  created_at   DateTime? @default(now())
+  updated_at   DateTime? @updatedAt
 
   department_id_fk    org_member?        @relation("department_id", fields: [id], references: [id])
   department_users_fk department_users[] @relation("department_users_department_id")
@@ -166,7 +165,7 @@ model department_users {
   updated_at DateTime? @updatedAt
 
   department_users_org_member_id_fk org_member @relation("department_users_org_member_id", fields: [org_member_id], references: [id])
-  department_users_role_id_fk roles?      @relation("department_users_role_id", fields: [role_id], references: [id])
+  department_users_role_id_fk       roles?     @relation("department_users_role_id", fields: [role_id], references: [id])
 
   department_users_department_id_fk department? @relation("department_users_department_id", fields: [department_id], references: [id])
 }
@@ -188,7 +187,7 @@ model process {
 
   stage_process_id_fk                 stage[]           @relation("stage_process_id")
   stage_ticket_revision_process_id_fk ticket_revision[] @relation("ticket_revision_process_id")
-  process_path_process_id_fk             process_path[]           @relation("process_path_process_id")
+  process_path_process_id_fk          process_path[]    @relation("process_path_process_id")
 }
 
 model stage {
@@ -224,11 +223,11 @@ model process_path {
   to_stage     String?
   process_id   String
 
-  process_path_created_by user?  @relation("process_path_created_by", fields: [created_by], references: [id])
-  process_path_updated_by user?  @relation("process_path_updated_by", fields: [updated_by], references: [id])
-  process_path_from_stage stage? @relation("process_path_from_stage", fields: [from_stage], references: [id])
-  process_path_to_stage   stage? @relation("process_path_to_stage", fields: [to_stage], references: [id])
-  process_path_process_id                 process          @relation("process_path_process_id", fields: [process_id], references: [id])
+  process_path_created_by user?   @relation("process_path_created_by", fields: [created_by], references: [id])
+  process_path_updated_by user?   @relation("process_path_updated_by", fields: [updated_by], references: [id])
+  process_path_from_stage stage?  @relation("process_path_from_stage", fields: [from_stage], references: [id])
+  process_path_to_stage   stage?  @relation("process_path_to_stage", fields: [to_stage], references: [id])
+  process_path_process_id process @relation("process_path_process_id", fields: [process_id], references: [id])
 }
 
 model ticket_revision_attachments {
@@ -248,12 +247,11 @@ model ticket_revision_attachments {
 
 model ticket {
   id              String    @id @default(uuid())
-  status          Int       @default(0) // open
+  status          Int       @default(0) // 0 open 1 closed
   created_by      String?
   updated_by      String?
   created_at      DateTime? @default(now())
   updated_at      DateTime? @updatedAt
-  request_id      String
   organisation_id String
 
   ticket_organisation_id       organisation?     @relation("ticket_organisation_id", fields: [organisation_id], references: [id])
@@ -263,24 +261,15 @@ model ticket {
 }
 
 model ticket_revision {
-  id                  String    @id @default(uuid())
-  title               String?
-  description         String?
-  project_name        String
-  project_description String
-  ticket_note         String?
-  reject_note         String?
-  resubmit_note       String?
-  invoice_no          String
-  status              Int       @default(0)
-  created_by          String?
-  updated_by          String?
-  created_at          DateTime? @default(now())
-  updated_at          DateTime? @updatedAt
-  process_id          String?
-  ticket_id           String
-  page                Int
-  next_revision_id    String?   @default(uuid())
+  id          String    @id @default(uuid())
+  title       String?
+  description String?   @db.Text
+  created_by  String?
+  updated_by  String?
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @updatedAt
+  process_id  String?
+  ticket_id   String
 
   ticket_revision_created_by            user?             @relation("ticket_revision_created_by", fields: [created_by], references: [id])
   ticket_revision_updated_by            user?             @relation("ticket_revision_updated_by", fields: [updated_by], references: [id])
@@ -295,14 +284,14 @@ model ticket_activity {
   updated_by         String?
   created_at         DateTime? @default(now())
   updated_at         DateTime? @updatedAt
-  assignee_id        String?
-  current_stage      String? // draft --> 5 th pending
+  assignee_id        String
+  current_stage      String // draft --> 5 th pending
+  remark             String?    @db.Text
   ticket_revision_id String
 
   ticket_activity_created_by         user?            @relation("ticket_activity_created_by", fields: [created_by], references: [id])
   ticket_activity_updated_by         user?            @relation("ticket_activity_updated_by", fields: [updated_by], references: [id])
-  ticket_activity_assignee_id        org_member?      @relation("ticket_activity_assignee_id", fields: [assignee_id], references: [id])
-  ticket_activity_current_stage      stage?           @relation("ticket_activity_current_stage", fields: [current_stage], references: [id])
-  ticket_activity_ticket_revision_id ticket_revision? @relation("ticket_activity_ticket_revision_id", fields: [ticket_revision_id], references: [id], onDelete: Cascade)
+  ticket_activity_assignee_id        org_member      @relation("ticket_activity_assignee_id", fields: [assignee_id], references: [id])
+  ticket_activity_current_stage      stage         @relation("ticket_activity_current_stage", fields: [current_stage], references: [id])
+  ticket_activity_ticket_revision_id ticket_revision @relation("ticket_activity_ticket_revision_id", fields: [ticket_revision_id], references: [id])
 }
-
