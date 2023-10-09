@@ -3,7 +3,7 @@ import { hash, genSalt } from 'bcrypt'
 const tenantID = '71df8bec-075a-48a0-9ea7-6d5f85de729c'
 const organisationUserID = 'd68fae1a-9da6-4f62-b700-97fb2c73502d'
 
-const userEmailID = 'da382b30-1a49-4ab4-89c5-033b39288d96'
+const userAccountID = 'da382b30-1a49-4ab4-89c5-033b39288d96'
 
 const userAuthenticationInfoID = '4ab2a9d6-789c-4d97-9fb9-162fa226f649'
 
@@ -56,6 +56,35 @@ const orgMemberRolesUser4ID = 'ea0dd9c3-4c4e-430d-a028-e47ff9685946'
 
 const departmentUser4ID = '2de50fb1-1e12-4064-9f9b-72b9d8c6b27a'
 
+const process1ID = '2de50fb1-1e12-4064-9f9b-72b9d8c6b27a'
+
+
+const ticketRaisedStageID="b6de2027-250c-4757-b8a7-8a4f97a7ff5b"
+const ticketApprovedStageID="6e7c1432-70fe-4fd4-b8bd-17e28efc2790"
+
+const ticketRejectedStageID="e72c75e7-90ac-49e5-b22f-fcab083d72ca"
+const ticketReassignedStageID="93349716-ac09-4dbe-8c0b-f48565012003"
+
+const ticketResolvedStageID="234b03a1-cac9-4d76-80a3-e4c79e2696ca"
+
+const ticketRevisedStageID="36b509da-5f49-4783-9373-f5e970467855"
+
+const ticketClosedStageID="8be8ab00-d924-4be4-98ea-d126f7eccd7f"
+
+const processPath1ID="911c27a0-0922-4242-a04a-cdbc424534ab"
+const processPath2ID="f5a9ca6e-6497-46c7-b200-927dbe6b232f"
+const processPath3ID="3891ceaf-1653-4577-af3e-5bb513d55cea"
+const processPath4ID="da4182dd-dd7e-44ec-bda6-8ac1533c951a"
+const processPath5ID="795a92d8-2c2a-4fc4-8d4d-aba2ce6f5e32"
+const processPath6ID="0075c5ee-667f-419c-8899-d929000368f8"
+const processPath7ID="4adaf403-5005-46f3-a91e-bc390c4858a7"
+const processPath8ID="e4050c51-3f5f-42e9-ac06-63912c9fc441"
+const processPath9ID="40aa3d4c-d919-48b2-9517-6e1ca9ca890c"
+const processPath10ID="15aebfe9-20d5-4b32-85b4-f5a7dca94d6c"
+const processPath11ID="1e507140-0bd9-4668-a2b9-ef7e73cc5738"
+
+
+
 async function createUser(prisma) {
   const tenant = await prisma.tenant.upsert({
     where: {
@@ -87,34 +116,22 @@ async function createUser(prisma) {
     },
   })
 
-  console.log('user is \n', user)
-
-  await prisma.user_email.upsert({
-    where: {
-      id: userEmailID,
-    },
-    update: {},
-    create: {
-      id: userEmailID,
-      email: 'appblocksAdmin@mailinator.com',
-      user_id: user.id,
-      email_type: 0,
-    },
-  })
-
+ 
   const salt = await genSalt(10)
   const password = await hash('Admin@01', 10)
 
-  await prisma.user_authentication_info.upsert({
+  await prisma.user_account.upsert({
     where: {
-      id: userAuthenticationInfoID,
+      id: userAccountID,
     },
     update: {},
     create: {
-      id: userAuthenticationInfoID,
+      id: userAccountID,
       user_id: user.id,
       password_hash: password,
       password_salt: salt,
+      provider:0,
+      email:"appblocksadmin@mailinator.com"
     },
   })
 
@@ -464,4 +481,300 @@ async function createDepartmentsAndAddUsers(prisma) {
   })
 }
 
-export { createUser, createPredefinedRoles,createMemberUsers,inviteMemberUsersToOrganisation,createDepartmentsAndAddUsers }
+
+async function createProcess(prisma) {
+
+  const generalticketProcess = await prisma.process.upsert({
+    where: {
+      id: process1ID,
+    },
+    update: {},
+    create: {
+      id: process1ID,
+      name:"general_ticket_management_flow",
+      organisation_id: organisationID,
+      created_by: organisationUserID,
+      display_name:"General Ticket Management Flow"
+    },
+  })
+
+
+  const ticketRaisedStage = await prisma.stage.upsert({
+    where: {
+      id: ticketRaisedStageID,
+    },
+    update: {},
+    create: {
+      id: ticketRaisedStageID,
+      process_id:process1ID,
+      name:"ticket_raised",
+      display_name:"Ticket Raised",
+      created_by: organisationUserID,
+      is_start:true,
+    },
+  })
+
+  const ticketApprovedStage = await prisma.stage.upsert({
+    where: {
+      id: ticketApprovedStageID,
+    },
+    update: {},
+    create: {
+      id: ticketApprovedStageID,
+      process_id:process1ID,
+      name:"ticket_approved",
+      display_name:"Ticket Approved",
+      created_by: organisationUserID,
+    },
+  })
+
+  const ticketRejectedStage = await prisma.stage.upsert({
+    where: {
+      id: ticketRejectedStageID,
+    },
+    update: {},
+    create: {
+      id: ticketRejectedStageID,
+      process_id:process1ID,
+      name:"ticket_rejected",
+      display_name:"Ticket Rejected",
+      created_by: organisationUserID,
+    },
+  })
+
+  const ticketReassignedStage = await prisma.stage.upsert({
+    where: {
+      id: ticketReassignedStageID,
+    },
+    update: {},
+    create: {
+      id: ticketReassignedStageID,
+      process_id:process1ID,
+      name:"ticket_reassigned",
+      display_name:"Ticket Reassigned",
+      created_by: organisationUserID,
+    },
+  })
+
+
+  const ticketResolvedStage = await prisma.stage.upsert({
+    where: {
+      id: ticketResolvedStageID,
+    },
+    update: {},
+    create: {
+      id: ticketResolvedStageID,
+      process_id:process1ID,
+      name:"ticket_resolved",
+      display_name:"Ticket Resolved",
+      created_by: organisationUserID,
+    },
+  })
+
+  const ticketRevisedStage = await prisma.stage.upsert({
+    where: {
+      id: ticketRevisedStageID,
+    },
+    update: {},
+    create: {
+      id: ticketRevisedStageID,
+      process_id:process1ID,
+      name:"ticket_revised",
+      display_name:"Ticket Revised",
+      created_by: organisationUserID,
+    },
+  })
+  const ticketClosedStage = await prisma.stage.upsert({
+    where: {
+      id: ticketClosedStageID,
+    },
+    update: {},
+    create: {
+      id: ticketClosedStageID,
+      process_id:process1ID,
+      name:"ticket_closed",
+      display_name:"Ticket Closed",
+      created_by: organisationUserID,
+      is_end:true
+    },
+  })
+
+  const processPath1 = await prisma.process_path.upsert({
+    where: {
+      id: processPath1ID,
+    },
+    update: {},
+    create: {
+      id: processPath1ID,
+      process_id:process1ID,
+      name:"ticket_raised_to_ticket_rejected",
+      display_name:"Ticket Raised to Ticket Rejected",
+      created_by: organisationUserID,
+      from_stage:ticketRaisedStageID,
+      to_stage:ticketRejectedStageID
+    },
+  })
+
+  const processPath2 = await prisma.process_path.upsert({
+    where: {
+      id: processPath2ID,
+    },
+    update: {},
+    create: {
+      id: processPath2ID,
+      process_id:process1ID,
+      name:"ticket_raised_to_ticket_resolved",
+      display_name:"Ticket Raised to Ticket Resolved",
+      created_by: organisationUserID,
+      from_stage:ticketRaisedStageID,
+      to_stage:ticketResolvedStageID
+    },
+  })
+
+  const processPath3 = await prisma.process_path.upsert({
+    where: {
+      id: processPath3ID,
+    },
+    update: {},
+    create: {
+      id: processPath3ID,
+      process_id:process1ID,
+      name:"ticket_raised_to_ticket_reassigned",
+      display_name:"Ticket Raised to Ticket Reassinged",
+      created_by: organisationUserID,
+      from_stage:ticketRaisedStageID,
+      to_stage:ticketReassignedStageID
+    },
+  })
+
+  const processPath4 = await prisma.process_path.upsert({
+    where: {
+      id: processPath4ID,
+    },
+    update: {},
+    create: {
+      id: processPath4ID,
+      process_id:process1ID,
+      name:"ticket_raised_to_ticket_revised",
+      display_name:"Ticket Raised to Ticket Revised",
+      created_by: organisationUserID,
+      from_stage:ticketRaisedStageID,
+      to_stage:ticketRevisedStageID
+    },
+  })
+
+
+  const processPath5 = await prisma.process_path.upsert({
+    where: {
+      id: processPath5ID,
+    },
+    update: {},
+    create: {
+      id: processPath5ID,
+      process_id:process1ID,
+      name:"ticket_rejected_to_ticket_closed",
+      display_name:"Ticket Rejected to Ticket Closed",
+      created_by: organisationUserID,
+      from_stage:ticketRejectedStageID,
+      to_stage:ticketClosedStageID
+    },
+  })
+
+  const processPath6 = await prisma.process_path.upsert({
+    where: {
+      id: processPath6ID,
+    },
+    update: {},
+    create: {
+      id: processPath6ID,
+      process_id:process1ID,
+      name:"ticket_rejected_to_ticket_revised",
+      display_name:"Ticket Rejected to Ticket Revised",
+      created_by: organisationUserID,
+      from_stage:ticketRejectedStageID,
+      to_stage:ticketRevisedStageID
+    },
+  })
+
+  const processPath7 = await prisma.process_path.upsert({
+    where: {
+      id: processPath7ID,
+    },
+    update: {},
+    create: {
+      id: processPath7ID,
+      process_id:process1ID,
+      name:"ticket_reassigned_to_ticket_reassinged",
+      display_name:"Ticket Reassigned to Ticket Reassigned",
+      created_by: organisationUserID,
+      from_stage:ticketReassignedStageID,
+      to_stage:ticketReassignedStageID
+    },
+  })
+
+  const processPath8 = await prisma.process_path.upsert({
+    where: {
+      id: processPath8ID,
+    },
+    update: {},
+    create: {
+      id: processPath8ID,
+      process_id:process1ID,
+      name:"ticket_reassigned_to_ticket_rejected",
+      display_name:"Ticket Reassigned to Ticket Rejected",
+      created_by: organisationUserID,
+      from_stage:ticketReassignedStageID,
+      to_stage:ticketRejectedStageID
+    },
+  })
+
+  const processPath9 = await prisma.process_path.upsert({
+    where: {
+      id: processPath9ID,
+    },
+    update: {},
+    create: {
+      id: processPath9ID,
+      process_id:process1ID,
+      name:"ticket_reassigned_to_ticket_resolved",
+      display_name:"Ticket Reassigned to Ticket Resolved",
+      created_by: organisationUserID,
+      from_stage:ticketReassignedStageID,
+      to_stage:ticketResolvedStageID
+    },
+  })
+
+  const processPath10 = await prisma.process_path.upsert({
+    where: {
+      id: processPath10ID,
+    },
+    update: {},
+    create: {
+      id: processPath10ID,
+      process_id:process1ID,
+      name:"ticket_reassigned_to_ticket_revised",
+      display_name:"Ticket Reassigned to Ticket Revised",
+      created_by: organisationUserID,
+      from_stage:ticketReassignedStageID,
+      to_stage:ticketRevisedStageID
+    },
+  })
+  
+  const processPath11 = await prisma.process_path.upsert({
+    where: {
+      id: processPath11ID,
+    },
+    update: {},
+    create: {
+      id: processPath11ID,
+      process_id:process1ID,
+      name:"ticket_resolved_to_ticket_closed",
+      display_name:"Ticket Resolved to Ticket Closed",
+      created_by: organisationUserID,
+      from_stage:ticketResolvedStageID,
+      to_stage:ticketClosedStageID
+    },
+  })
+}
+
+export { createUser, createPredefinedRoles,createMemberUsers,inviteMemberUsersToOrganisation,createDepartmentsAndAddUsers,createProcess }
