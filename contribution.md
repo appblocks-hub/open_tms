@@ -2,7 +2,7 @@
 
 ## Prerequisites
 1. You need a Linux/Unix machine.
-2. Node.js must be installed.
+2. Node.js must be installed.Node version of 16 or greater is needed.
 3. Docker engine and Docker Compose must be installed.
 4. Understanding of block architecture and function block development is required.
 
@@ -12,7 +12,8 @@ The entire project is built using appblocks tooling. For each issue posted, cert
 1. Fork the repository and pull it to your local machine.
 2. Install `@appblocks/bb-cli` from the npm registry.
 3. Change to the project directory.
-4. Run the following commands:
+4. Create a .env.function file in the root directory and add the variables from .sample.env.function.
+5. Run the following commands:
 
 ```
 docker-compose up
