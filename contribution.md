@@ -30,3 +30,27 @@ This will set up the database in your local machine with seed data.
 4. Understand the database schema and function block requirements.
 5. Complete the task and perform a git push.
 6. Raise a pull request against the original repository's main branch.
+7. Sample api docs sample for a function block is
+/**
+ * @swagger
+ * /rootPackageName/function1:
+ *   post:
+ *     summary: Retrieve a list of JSONPlaceholder users for function1
+ *     description: Retrieve a list of users from JSONPlaceholder.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               parameter1:
+ *                 type: string
+ *     responses:
+ *        '201':
+ *          description: Created
+ *        '200':
+ *          description: Ok
+ *     
+*/
+8. The docs can viewed via the function_url/docs route.
