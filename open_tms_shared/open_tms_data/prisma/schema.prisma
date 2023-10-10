@@ -81,7 +81,7 @@ model user {
 model user_account {
   id            String    @id @default(uuid())
   email         String
-  provider      Int // 0 password 1 google
+  provider      String // 0 password 1 google
   password_hash String?
   password_salt String?
   created_at    DateTime? @default(now())

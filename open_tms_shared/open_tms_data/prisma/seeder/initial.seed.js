@@ -29,6 +29,8 @@ const orgMemberUser1ID = '940c365b-b75b-4fc9-a0c4-c0e6c8496539'
 
 const orgMemberRolesUser1ID = '74049637-630e-46b0-8f8b-1f0cc754fb93'
 
+const memberUser1AccountID="e614be04-6f81-446c-84d1-8dae439d80c6"
+
 const departmentUser1ID = 'a50ea42f-ba55-4c18-813a-0492b59863e2'
 
 const memberUser2ID = 'e906b6f6-f609-40d9-b2e0-c263d541669b'
@@ -39,6 +41,8 @@ const orgMemberRolesUser2ID = '74d1ab12-e32b-4168-87d5-91644b3b0ce6'
 
 const departmentUser2ID = '9816aa00-13ea-4ece-9893-a408599bb8f0'
 
+const memberUser2AccountID="6f97e82a-e114-478b-a5d4-498f5af5ec53"
+
 const memberUser3ID = '6e7ddb72-3dba-4d1a-99fe-5a09d2914c6e'
 
 const orgMemberUser3ID = 'c5ac3afd-8d9c-43a4-b6e2-eebec755151b'
@@ -47,6 +51,8 @@ const orgMemberRolesUser3ID = '07f264b0-7e24-4967-8b4a-5a2a5bff82ef'
 
 const departmentUser3ID = '865dfd85-ab3c-493b-8aea-2a194df9b7f1'
 
+const memberUser3AccountID="7908a9ac-1fa2-432c-a6f8-1aa58a52b80b"
+
 const memberUser4ID = '3ac14aca-0e57-4506-90fe-6b476d81117a'
 
 const orgMemberUser4ID = '1a4cc4a7-305b-41a6-bcef-fe15bec56a41'
@@ -54,6 +60,8 @@ const orgMemberUser4ID = '1a4cc4a7-305b-41a6-bcef-fe15bec56a41'
 const orgMemberRolesUser4ID = 'ea0dd9c3-4c4e-430d-a028-e47ff9685946'
 
 const departmentUser4ID = '2de50fb1-1e12-4064-9f9b-72b9d8c6b27a'
+
+const memberUser4AccountID="39336571-3643-48ac-a9ff-6ae360e2efbe"
 
 const process1ID = '2de50fb1-1e12-4064-9f9b-72b9d8c6b27a'
 
@@ -153,7 +161,7 @@ async function createUser(prisma) {
       user_id: user.id,
       password_hash: password,
       password_salt: salt,
-      provider: 0,
+      provider: "password",
       email: 'appblocksadmin@mailinator.com',
     },
   })
@@ -246,6 +254,24 @@ async function createMemberUsers(prisma) {
     },
   })
 
+  const salt = await genSalt(10)
+  const mR1password = await hash('memberUser1@01', 10)
+
+  await prisma.user_account.upsert({
+    where: {
+      id: memberUser1AccountID,
+    },
+    update: {},
+    create: {
+      id: memberUser1AccountID,
+      user_id: memberUser1ID,
+      password_hash: mR1password,
+      password_salt: salt,
+      provider: "password",
+      email: 'memberUser1@mailinator.com',
+    },
+  })
+
   const memberUser2 = await prisma.user.upsert({
     where: {
       id: memberUser2ID,
@@ -260,6 +286,24 @@ async function createMemberUsers(prisma) {
       display_name: 'Member User 2',
     },
   })
+
+  const mR2Password = await hash('memberUser2@01', 10)
+
+  await prisma.user_account.upsert({
+    where: {
+      id: memberUser2AccountID,
+    },
+    update: {},
+    create: {
+      id: memberUser2AccountID,
+      user_id: memberUser2ID,
+      password_hash: mR2Password,
+      password_salt: salt,
+      provider: "password",
+      email: 'memberUser2@mailinator.com',
+    },
+  })
+
 
   const memberUser3 = await prisma.user.upsert({
     where: {
@@ -276,6 +320,24 @@ async function createMemberUsers(prisma) {
     },
   })
 
+  const mR3password = await hash('memberUser3@01', 10)
+
+  await prisma.user_account.upsert({
+    where: {
+      id: memberUser3AccountID,
+    },
+    update: {},
+    create: {
+      id: memberUser3AccountID,
+      user_id: memberUser3ID,
+      password_hash: mR3password,
+      password_salt: salt,
+      provider: "password",
+      email: 'memberUser3@mailinator.com',
+    },
+  })
+
+
   const memberUser4 = await prisma.user.upsert({
     where: {
       id: memberUser4ID,
@@ -290,6 +352,24 @@ async function createMemberUsers(prisma) {
       display_name: 'Member User 4',
     },
   })
+
+  const mR4Password = await hash('memberUser4@01', 10)
+
+  await prisma.user_account.upsert({
+    where: {
+      id: memberUser4AccountID,
+    },
+    update: {},
+    create: {
+      id: memberUser4AccountID,
+      user_id: memberUser4ID,
+      password_hash: mR4Password,
+      password_salt: salt,
+      provider: "password",
+      email: 'memberUser4@mailinator.com',
+    },
+  })
+
 }
 
 async function inviteMemberUsersToOrganisation(prisma) {
