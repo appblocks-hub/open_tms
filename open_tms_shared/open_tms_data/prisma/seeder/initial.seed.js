@@ -987,6 +987,41 @@ async function createTicket(prisma) {
     },
   })
 
+
+  const t2Revision1 = await prisma.ticket_revision.upsert({
+    where: {
+      id: t2Revision1ID,
+    },
+    update: {},
+    create: {
+      id: t2Revision1ID,
+      title: 'Sample Ticket 2 Revision 1',
+      description: 'Sample Ticket 2 Description1',
+      process_id: process1ID,
+      created_by: memberUser2ID,
+      ticket_id: sampleTicket1ID,
+    },
+  })
+
+  const t2Activity1 = await prisma.ticket_activity.upsert({
+    where: {
+      id: t2Activity1ID,
+    },
+    update: {},
+    create: {
+      id: t2Activity1ID,
+      ticket_revision_id: t2Revision1ID,
+      created_by: memberUser1ID,
+      current_stage: ticketRaisedStageID,
+      assignee_id:orgMemberUser2ID
+    },
+  })
+
+
+}
+
+async function updateTicket(prisma){
+
   const t1Activity2 = await prisma.ticket_activity.upsert({
     where: {
       id: t1Activity2ID,
@@ -1056,35 +1091,6 @@ async function createTicket(prisma) {
       created_by: memberUser1ID,
       current_stage: ticketClosedStageID,
       assignee_id: operationsDepartmentOrgMemberID,
-    },
-  })
-
-  const t2Revision1 = await prisma.ticket_revision.upsert({
-    where: {
-      id: t2Revision1ID,
-    },
-    update: {},
-    create: {
-      id: t2Revision1ID,
-      title: 'Sample Ticket 2 Revision 1',
-      description: 'Sample Ticket 2 Description1',
-      process_id: process1ID,
-      created_by: memberUser2ID,
-      ticket_id: sampleTicket1ID,
-    },
-  })
-
-  const t2Activity1 = await prisma.ticket_activity.upsert({
-    where: {
-      id: t2Activity1ID,
-    },
-    update: {},
-    create: {
-      id: t2Activity1ID,
-      ticket_revision_id: t2Revision1ID,
-      created_by: memberUser1ID,
-      current_stage: ticketRaisedStageID,
-      assignee_id:orgMemberUser2ID
     },
   })
 
@@ -1212,4 +1218,5 @@ export {
   createDepartmentsAndAddUsers,
   createProcess,
   createTicket,
+  updateTicket
 }
