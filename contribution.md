@@ -102,3 +102,5 @@ Format to pass middlewares in package block.config.json
       }
 ```
 The order of middleware execution follows the order in which they are defined in the array. For package-level middlewares (at the start of the package), they will be executed before the middlewares defined in the block's configuration.
+
+10. Please do add unit tests in separate test.spec file.Please use jest as test runner framework.Its preferrable.
