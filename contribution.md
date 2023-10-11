@@ -31,6 +31,7 @@ This will set up the database in your local machine with seed data.
 4. Understand the database schema and function block requirements.
 5. Complete the task and perform a git push.
 6. Raise a pull request against the original repository's main branch.
+
 7. Sample api docs sample for a function block is
 
 ```
@@ -58,4 +59,46 @@ This will set up the database in your local machine with seed data.
 */
 ```
 
-8. The docs can viewed via the function_url/docs route.
+The docs can viewed via the function_url/docs route.
+
+8. Using shared block inside function blocks.
+
+Shared blocks are global blocks that can be utilized across all other function blocks. Functions exported from shared blocks can be accessed in any function block using `@appblocks/node-sdk`. Below is a code snippet illustrating this:
+
+```
+import { shared } from "@appblocks/node-sdk";
+
+const handler = async ({ req, res }) => {
+ const { prisma } = await shared.getShared();
+}
+
+```
+
+9. Using middleware block inside function blocks
+
+To incorporate custom middleware, you can create a function block and assign it as middleware in the block.config.json file.
+
+Here's the format for specifying middlewares in the function block's config.json:
+```
+      {
+        //...rest block.config.json
+        "middlewares": [middlewareName]
+      }
+```
+Format to pass middlewares in package block.config.json
+```
+      {
+        //...rest block.config.json
+        "middlewares": [
+          {
+            "executeOnBlocks": [], // Optional : if empty all functions are considered
+            "middlewaresList": ["midBlockCommon"]
+          },
+          {
+            "executeOnBlocks": ["fnBlockA", "fnBlockB"],
+            "middlewaresList": ["midBlockA"]
+          }
+        ],
+      }
+```
+The order of middleware execution follows the order in which they are defined in the array. For package-level middlewares (at the start of the package), they will be executed before the middlewares defined in the block's configuration.
