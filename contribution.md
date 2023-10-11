@@ -56,4 +56,10 @@ This will set up the database in your local machine with seed data.
  *     
 */
 8. The docs can viewed via the function_url/docs route.
+9. To use shared modules within a block the following code fragment can be used 
+#  import { shared } from "@appblocks/node-sdk";
+
+# const handler = async ({ req, res }) => {
+# const { prisma } = await shared.getShared();
+# }
 
