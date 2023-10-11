@@ -1,6 +1,7 @@
 # Contribution Guidelines
 
 ## Prerequisites
+
 1. You need a Linux/Unix machine.
 2. Node.js must be installed.Node version of 16 is needed.
 3. Docker engine and Docker Compose must be installed.
@@ -9,6 +10,7 @@
 The entire project is built using appblocks tooling. For each issue posted, certain function blocks need to be built.
 
 ## Setup Steps
+
 1. Fork the repository and pull it to your local machine.
 2. Install `@appblocks/bb-cli` from the npm registry.
 3. Change to the project directory.
@@ -17,15 +19,12 @@ The entire project is built using appblocks tooling. For each issue posted, cert
 
 ```
 docker-compose up
-cd open_tms_shared/open_tms_data
-npm i
-npm run db:push
-npm run prisma:seed:dev
-
 ```
+
 This will set up the database in your local machine with seed data.
 
 ## Contributing Process
+
 1. Identify an issue you want to work on and check [here](https://github.com/appblocks-hub/challenges) to see if the issue is still unassigned
 2. Ask in the issue comment for getting the task assigned to you
 3. Check the issue you are working on and refer to the issue description to understand the intended workflow.
@@ -53,7 +52,7 @@ This will set up the database in your local machine with seed data.
  *          description: Created
  *        '200':
  *          description: Ok
- *     
+ *
 */
 8. The docs can viewed via the function_url/docs route.
 9. To use shared modules within a block the following code fragment can be used 
@@ -62,4 +61,4 @@ This will set up the database in your local machine with seed data.
 # const handler = async ({ req, res }) => {
 # const { prisma } = await shared.getShared();
 # }
-
+10. Please do add unit tests in separate test.spec file.Please use jest as test runner framework.Its preferrable.

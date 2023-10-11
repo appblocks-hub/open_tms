@@ -17,6 +17,9 @@
     },
     "open_tms_shared_validation": {
       "directory": "open_tms_shared_validation"
+    },
+    "open_tms_data": {
+      "directory": "open_tms_data"
     }
   }
 }
