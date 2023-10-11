@@ -4,7 +4,7 @@
 1. You need a Linux/Unix machine.
 2. Node.js must be installed.Node version of 16 is needed.
 3. Docker engine and Docker Compose must be installed.
-4. Understanding of block architecture and function block development is required.
+4. Understanding of block architecture and function block development is required. Please check the docs [here](https://docs.appblocks.com)
 
 The entire project is built using appblocks tooling. For each issue posted, certain function blocks need to be built.
 
