@@ -32,7 +32,7 @@ This will set up the database in your local machine with seed data.
 4. Understand the database schema and function block requirements.
 5. Complete the task and perform a git push.
 6. Raise a pull request against the original repository's main branch.
-7. Sample api docs sample for a function block is
+7. Sample api docs for a function block is
 /**
  * @swagger
  * /rootPackageName/function1:
