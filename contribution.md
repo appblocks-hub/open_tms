@@ -19,6 +19,10 @@ The entire project is built using appblocks tooling. For each issue posted, cert
 
 ```
 docker-compose up
+cd open_tms_shared/open_tms_data
+npm i
+npm run db:push
+npm run prisma:seed:dev
 ```
 
 This will set up the database in your local machine with seed data.
