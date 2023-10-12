@@ -53,21 +53,23 @@ const handler = async ({ req, res }) => {
       is_email_verified: false,
       created_at: new Date(),
       updated_at: new Date(),
-      provider: 'password'
+      provider: 'password',
     }
 
+    let user_account_id = null
     await prisma.$transaction(async (tx) => {
       const userData = await tx.user.create({
         data: user,
       })
-      await tx.user_account.create({
+      const userAccData = await tx.user_account.create({
         data: { ...user_account, user_id: userData.id },
       })
+      user_account_id = userAccData.id
     })
 
     const otp = generateRandomString()
     if (!redis.isOpen) await redis.connect()
-    await redis.set(`${user_account.id}_otp`, otp, { EX: 600 })
+    await redis.set(`${user_account_id}_otp`, otp, { EX: 600 })
     await redis.disconnect()
 
     const emailTemplate = hbs.compile(otpTemp)
