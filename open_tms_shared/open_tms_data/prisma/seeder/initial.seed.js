@@ -999,7 +999,7 @@ async function createTicket(prisma) {
       description: 'Sample Ticket 2 Description1',
       process_id: process1ID,
       created_by: memberUser2ID,
-      ticket_id: sampleTicket1ID,
+      ticket_id: sampleTicket2ID,
     },
   })
 
@@ -1119,7 +1119,7 @@ async function updateTicket(prisma){
       description: 'Sample Ticket 2 Description2',
       process_id: process1ID,
       created_by: organisationUserID,
-      ticket_id: sampleTicket1ID,
+      ticket_id: sampleTicket2ID,
     },
   })
 
@@ -1163,7 +1163,7 @@ async function updateTicket(prisma){
       description: 'Sample Ticket 2 Description3',
       process_id: process1ID,
       created_by: memberUser3ID,
-      ticket_id: sampleTicket1ID,
+      ticket_id: sampleTicket2ID,
     },
   })
 
