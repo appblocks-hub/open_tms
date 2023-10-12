@@ -1,6 +1,6 @@
 import React from 'react'
 import RouterMain from './navigation/RouterMain'
-import { Routes, Route, Link } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, Link } from 'react-router-dom'
 
 export const Home = () => {
   return (
@@ -19,12 +19,9 @@ export const NoMatch = () => {
   )
 }
 
-const App = () => {
-  return (
-    <div className='min-h-screen w-full'>
-      <RouterMain />
-    </div>
-  )
-}
+const router = createBrowserRouter([{ path: '*', Component: RouterMain }])
 
-export default App
+// 4️⃣ RouterProvider added
+export default function App() {
+  return <RouterProvider router={router} />
+}

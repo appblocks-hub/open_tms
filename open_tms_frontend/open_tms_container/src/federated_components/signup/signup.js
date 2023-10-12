@@ -3,7 +3,7 @@ import { useFederatedComponent } from '@appblocks/js-sdk'
 
 const SignUp = (props) => {
   const system = {
-    url: process.env.BB_AUTH_ELEMENTS_URL,
+    url: process.env.BB_OPEN_TMS_ELEMENTS_URL,
     scope: 'remotes',
     module: './open_tms_auth_fe_signup',
   }
@@ -17,9 +17,7 @@ const SignUp = (props) => {
   return (
     <>
       <React.Suspense fallback={''}>
-        {errorLoading
-          ? `Error loading module "${module}"`
-          : FederatedComponent && <FederatedComponent {...props} />}
+        {errorLoading ? `Error loading module "${module}"` : FederatedComponent && <FederatedComponent {...props} />}
       </React.Suspense>
     </>
   )
