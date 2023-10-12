@@ -81,6 +81,8 @@ const handler = async ({ req, res }) => {
 9. Using middleware block inside function blocks
 
 To incorporate custom middleware, you can create a function block and assign it as middleware in the block.config.json file.
+ 
+Note: Middleware functions should return true to be continued to next, else the api will be exited from that middleware
 
 Here's the format for specifying middlewares in the function block's config.json:
 ```

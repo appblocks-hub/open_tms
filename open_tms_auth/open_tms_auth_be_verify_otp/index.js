@@ -32,68 +32,65 @@ const handler = async (event) => {
       });
     }
 
-    const user = await prisma.admin_users.findFirst({
+    const user_account = await prisma.user_account.findFirst({
       where: {
         email: requestBody.email,
       },
+      include: { user: true },
     });
 
-    if (!user) {
+    if (!user_account) {
       return sendResponse(res, 400, {
         message: "Please enter a valid user id",
       });
-    } else {
-      // Retrieve the value of the key
+    }
+
+    const { user } = user_account;
+
+    // Retrieve the value of the key
+    if (!redis.isOpen) await redis.connect();
+    const otp = await redis.get(`${user_account.id}_otp`);
+    await redis.disconnect();
+
+    if (otp != requestBody.otp) {
+      return sendResponse(res, 400, {
+        message: "Invalid OTP. Please try again or generate new otp",
+      });
+    }
+
+    if (otp == requestBody.otp) {
+      await prisma.user_account.update({
+        where: {
+          id: user_account.id,
+        },
+        data: {
+          is_email_verified: true,
+          updated_at: new Date(),
+        },
+      });
+
+      const userAuthToken = generateRandomString(32);
+      // Store the otp with an expiry stored in env.function in seconds
       if (!redis.isOpen) await redis.connect();
-      const otp = await redis.get(`${user.id}_otp`);
+      await redis.set(userAuthToken, user_account.id, {
+        EX: Number(process.env.BB_OPEN_TMS_AUTH_OTP_EXPIRY_TIME_IN_SECONDS),
+      });
       await redis.disconnect();
 
-      if (otp == requestBody.otp) {
-        return sendResponse(res, 400, {
-          message: "Invalid OTP. Please try again or generate new otp",
-        });
-      }
-
-      if (otp == requestBody.otp) {
-        const updatedUser = await prisma.admin_users.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            is_verified: true,
-            updated_at: new Date(),
-          },
-        });
-
-        const userAuthToken = generateRandomString(32);
-        // Store the otp with an expiry stored in env.function in seconds
-        if (!redis.isOpen) await redis.connect();
-        await redis.set(userAuthToken, user.id, {
-          EX: Number(process.env.BB_OPEN_TMS_OTP_EXPIRY_TIME_IN_SECONDS),
-        });
-        await redis.disconnect();
-
-        sendResponse(res, 200, {
-          data: { user_auth_token: userAuthToken },
-          message: "OTP verified successfully",
-        });
-      } else {
-        return sendResponse(res, 400, {
-          message: "Invalid OTP. Please try again or generate new otp",
-        });
-      }
+      return sendResponse(res, 200, {
+        data: { user_auth_token: userAuthToken },
+        message: "OTP verified successfully",
+      });
     }
+
+    return sendResponse(res, 400, {
+      message: "Invalid OTP. Please try again or generate new otp",
+    });
   } catch (e) {
     console.log(e.message);
-    if (e.errorCode && e.errorCode < 500) {
-      return sendResponse(res, e.errorCode, {
-        message: e.message,
-      });
-    } else {
-      return sendResponse(res, 500, {
-        message: "failed",
-      });
-    }
+    return sendResponse(res, e.errorCode ? e.errorCode : 500, {
+      message: e.errorCode < 500 ? e.message : "something went wrong",
+    });
   }
 };
 

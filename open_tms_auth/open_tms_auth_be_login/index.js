@@ -1,8 +1,7 @@
 import { compare } from "bcrypt";
-import { shared, env } from "@appblocks/node-sdk";
+import { shared } from "@appblocks/node-sdk";
 import jwt from "jsonwebtoken";
 
-// env.init()
 const handler = async ({ req, res }) => {
   const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth } =
     await shared.getShared();
@@ -21,21 +20,24 @@ const handler = async ({ req, res }) => {
       });
     }
 
-    const user = await prisma.admin_users.findFirst({
+    const user_account = await prisma.user_account.findFirst({
       where: {
         email: requestBody.email,
       },
+      include: { user: true },
     });
 
-    if (!user) {
+    if (!user_account) {
       return sendResponse(res, 400, {
         message: "Invalid email/password",
       });
     }
 
+    const { user } = user_account;
+
     const isPasswordMatching = await compare(
       requestBody.password,
-      user.password
+      user_account.password_hash
     ).catch(() => false);
 
     if (!isPasswordMatching) {
@@ -45,56 +47,46 @@ const handler = async ({ req, res }) => {
       });
     }
 
-    if (isPasswordMatching && !user?.is_verified) {
+    if (isPasswordMatching && !user_account.is_email_verified) {
       return sendResponse(res, 403, {
         data: {
           user_id: user.id,
-          isVerified: user.is_verified,
+          is_email_verified: user_account.is_email_verified,
         },
         message: "User is not Verified.",
       });
     }
 
     const tokenGenerate = {
-      full_name: user.full_name,
-      user_name: user.user_name,
+      first_name: user.first_name,
       id: user.id,
-      email: user.email,
-      isVerified: user.is_verified,
-      role: user.role,
+      email: user_account.email,
+      is_email_verified: user_account.is_email_verified,
     };
 
-    const secretKey = process.env.BB_OPEN_TMS_SECRET_KEY;
-    const refreshKey = process.env.BB_OPEN_TMS_REFRESH_KEY;
-
+    const secretKey = process.env.BB_OPEN_TMS_AUTH_SECRET_KEY;
+    const refreshKey = process.env.BB_OPEN_TMS_AUTH_REFRESH_KEY;
     const userResponse = {
       token: jwt.sign(tokenGenerate, secretKey, {
-        expiresIn: process.env.BB_OPEN_TMS_ACCESS_TOKEN_EXPIRY,
+        expiresIn: process.env.BB_OPEN_TMS_AUTH_ACCESS_TOKEN_EXPIRY,
       }),
       refreshToken: jwt.sign(tokenGenerate, refreshKey, {
-        expiresIn: process.env.BB_OPEN_TMS_REFRESH_TOKEN_EXPIRY,
+        expiresIn: process.env.BB_OPEN_TMS_AUTH_REFRESH_TOKEN_EXPIRY,
       }),
       refreshExpiry: parseInt(
-        process.env.BB_OPEN_TMS_REFRESH_TOKEN_EXPIRY.slice(0, -1),
+        process.env.BB_OPEN_TMS_AUTH_REFRESH_TOKEN_EXPIRY.slice(0, -1),
         10
       ),
     };
+    console.log('\nsecretKey : ', secretKey)
+    console.log('\ntoken : ', userResponse.token)
 
-    sendResponse(res, 200, {
-      data: userResponse,
-      message: "Sucess",
-    });
+    sendResponse(res, 200, { data: userResponse, message: "Success" });
   } catch (e) {
     console.log(e.message);
-    if (e.errorCode && e.errorCode < 500) {
-      return sendResponse(res, e.errorCode, {
-        message: e.message,
-      });
-    } else {
-      return sendResponse(res, 500, {
-        message: "failed",
-      });
-    }
+    return sendResponse(res, e.errorCode ? e.errorCode : 500, {
+      message: e.errorCode < 500 ? e.message : "something went wrong",
+    });
   }
 };
 

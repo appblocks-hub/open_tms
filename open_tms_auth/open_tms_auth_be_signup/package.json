@@ -22,7 +22,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@appblocks/node-sdk": "github:appblocks-hub/node-sdk",
+    "@appblocks/node-sdk": "^0.0.7",
     "bcrypt": "^5.1.0",
     "express": "^4.17.3",
     "hbs": "^4.2.0",

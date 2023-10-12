@@ -1,9 +1,8 @@
 /* eslint-disable import/extensions */
-import { shared, env } from "@appblocks/node-sdk";
+import { shared } from "@appblocks/node-sdk";
 import hbs from "hbs";
 import otpTemp from "./templates/otp-email-temp.js";
 
-env.init();
 const handler = async (event) => {
   const { req, res } = event;
 
@@ -17,6 +16,7 @@ const handler = async (event) => {
     sendMail,
     generateRandomString,
   } = await shared.getShared();
+  
   try {
     // health check
     if (checkHealth(req, res)) return;
@@ -25,35 +25,39 @@ const handler = async (event) => {
 
     const requestBody = req.body;
 
-    if (isEmpty(requestBody) || !requestBody.hasOwnProperty("user_id")) {
+    if (
+      isEmpty(requestBody) ||
+      !requestBody.hasOwnProperty("user_account_id")
+    ) {
       return sendResponse(res, 400, {
         message: "Please provide a User ID",
       });
     }
 
-    const user = await prisma.admin_users.findFirst({
+    const user_account = await prisma.user_account.findFirst({
       where: {
-        id: requestBody.user_id,
+        id: requestBody.user_account_id,
       },
+      include: { user: true },
     });
 
-    if (!user) {
-      return sendResponse(res, 400, {
-        message: "Invalid User ID",
-      });
+    if (!user_account) {
+      return sendResponse(res, 400, { message: "Invalid User ID" });
     }
 
     const otp = generateRandomString();
 
     // Store the otp with an expiry stored in env.function in seconds
-    await redis.set(user.id, otp, {
-      EX: Number(process.env.BB_OPEN_TMS_OTP_EXPIRY_TIME_IN_SECONDS),
+    await redis.set(`${user_account.id}_otp`, otp, {
+      EX: Number(process.env.BB_OPEN_TMS_AUTH_OTP_EXPIRY_TIME_IN_SECONDS),
     });
 
     const emailTemplate = hbs.compile(otpTemp);
 
+    const { user } = user_account;
+
     const message = {
-      to: user.email,
+      to: user_account.email,
       from: {
         name: process.env.EMAIL_SENDER_NAME,
         email: process.env.SENDER_EMAIL_ID,
@@ -61,8 +65,8 @@ const handler = async (event) => {
       subject: "verify otp",
       text: "Please verify your otp",
       html: emailTemplate({
-        logo: process.env.BB_OPEN_TMS_LOGO_URL,
-        user: user.full_name,
+        logo: process.env.BB_OPEN_TMS_AUTH_LOGO_URL,
+        user: user.first_name,
         otp,
       }),
     };
@@ -74,15 +78,9 @@ const handler = async (event) => {
     });
   } catch (e) {
     console.log(e.message);
-    if (e.errorCode && e.errorCode < 500) {
-      return sendResponse(res, e.errorCode, {
-        message: e.message,
-      });
-    } else {
-      return sendResponse(res, 500, {
-        message: "failed",
-      });
-    }
+    return sendResponse(res, e.errorCode ? e.errorCode : 500, {
+      message: e.errorCode < 500 ? e.message : 'something went wrong',
+    })
   }
 };
 
