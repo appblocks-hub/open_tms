@@ -2,15 +2,15 @@ import { shared } from '@appblocks/node-sdk'
 
 const handler = async (event) => {
   const { req, res } = event
-  const { sendResponse } = await shared.getShared()
+  const { sendResponse, prisma } = await shared.getShared()
 
   // health check
   if (req.params.health === 'health') {
     return sendResponse(res, 200, { message: 'Health check success' })
   }
-
-  console.log(req.user);
-  console.log(req.body);
+  console.log('prisma - ', prisma.ticket)
+  console.log(req.user)
+  console.log(req.body)
   /**
    * Add close ticket logic here
    */

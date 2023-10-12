@@ -3,7 +3,7 @@ import { useFederatedComponent } from '@appblocks/js-sdk'
 
 const VerifyOtp = () => {
   const system = {
-    url: process.env.BB_AUTH_ELEMENTS_URL,
+    url: process.env.BB_OPEN_TMS_ELEMENTS_URL,
     scope: 'remotes',
     module: './open_tms_auth_fe_verify_otp',
   }
@@ -18,9 +18,7 @@ const VerifyOtp = () => {
   return (
     <>
       <React.Suspense fallback={''}>
-        {errorLoading
-          ? `Error loading module "${module}"`
-          : FederatedComponent && <FederatedComponent />}
+        {errorLoading ? `Error loading module "${module}"` : FederatedComponent && <FederatedComponent />}
       </React.Suspense>
     </>
   )

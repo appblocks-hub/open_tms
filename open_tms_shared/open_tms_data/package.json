@@ -24,10 +24,10 @@
     "license": "ISC",
     "dependencies": {
         "@appblocks/node-sdk": "^0.0.7",
-        "@prisma/client": "^5.4.1",
+        "@prisma/client": "^4.13.0",
         "bcrypt": "^5.1.1",
         "dotenv": "^16.3.1",
-        "dotenv-cli":"7.3.0"
+        "dotenv-cli": "7.3.0"
     },
     "devDependencies": {
         "@commitlint/cli": "15.0.0",
@@ -43,6 +43,7 @@
         "jest": "27.4.3",
         "lint-staged": "11.2.3",
         "prettier": "2.4.1",
+        "prisma": "^4.13.0",
         "standard-version": "^9.5.0"
     }
 }
