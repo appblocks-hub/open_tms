@@ -52,11 +52,6 @@ const handler = async (event) => {
     const otp = await redis.get(`${user_account.id}_otp`);
     await redis.disconnect();
 
-    console.log({
-      otp,
-      requestBody,
-    });
-
     if (otp != requestBody.otp) {
       return sendResponse(res, 400, {
         message: "Invalid OTP. Please try again or generate new otp",
@@ -77,7 +72,7 @@ const handler = async (event) => {
       const userAuthToken = generateRandomString(32);
       // Store the otp with an expiry stored in env.function in seconds
       if (!redis.isOpen) await redis.connect();
-      await redis.set(userAuthToken, user.id, {
+      await redis.set(userAuthToken, user_account.id, {
         EX: Number(process.env.BB_OPEN_TMS_AUTH_OTP_EXPIRY_TIME_IN_SECONDS),
       });
       await redis.disconnect();
