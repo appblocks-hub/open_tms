@@ -209,6 +209,8 @@ model stage {
   process_path_from_stage_fk       process_path[]    @relation("process_path_from_stage")
   process_path_to_stage_fk         process_path[]    @relation("process_path_to_stage")
   ticket_activity_current_stage_fk ticket_activity[] @relation("ticket_activity_current_stage")
+  @@unique([name,process_id], name: "stage_name_process_id")
+
 }
 
 model process_path {
