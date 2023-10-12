@@ -1,27 +1,17 @@
-import { hash } from 'bcrypt'
-import { shared, env } from '@appblocks/node-sdk'
-import otpTemp from './templates/otp-temp.js'
+/* eslint-disable import/extensions */
 import hbs from 'hbs'
+import { genSalt, hash } from 'bcrypt'
+import { shared } from '@appblocks/node-sdk'
+import otpTemp from './templates/otp-temp.js'
 import validateSignupInput from './validation.js'
-import { nanoid } from 'nanoid'
-
-env.init()
 
 const handler = async ({ req, res }) => {
-  const {
-    sendResponse,
-    isEmpty,
-    prisma,
-    validateRequestMethod,
-    checkHealth,
-    generateRandomString,
-    sendMail,
-    redis,
-  } = await shared.getShared()
+  const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth, generateRandomString, sendMail, redis } =
+    await shared.getShared()
 
   try {
     // health check
-    if (checkHealth(req, res)) return
+    if (checkHealth(req, res)) return {}
 
     await validateRequestMethod(req, ['POST'])
 
@@ -35,7 +25,7 @@ const handler = async ({ req, res }) => {
 
     validateSignupInput(requestBody)
 
-    const emailValid = await prisma.admin_users.findFirst({
+    const emailValid = await prisma.user_account.findFirst({
       where: { email: requestBody.email },
     })
 
@@ -45,27 +35,39 @@ const handler = async ({ req, res }) => {
       })
     }
 
-    const password = await hash(requestBody.password, 10)
-    const adminu = {
-      id: nanoid(),
-      full_name: requestBody.first_name + ' ' + requestBody.last_name,
-      user_name: requestBody.first_name + requestBody.last_name,
-      email: requestBody.email,
-      password,
-      role: 'admin',
-      is_verified: false,
+    const password_salt = await genSalt()
+    const password_hash = await hash(requestBody.password, 10)
+
+    const user = {
+      first_name: requestBody.first_name,
+      last_name: requestBody.last_name,
+      display_name: `${requestBody.first_name} ${requestBody.last_name}`,
       created_at: new Date(),
       updated_at: new Date(),
     }
-    console.log(adminu)
 
-    const user = await prisma.admin_users.create({
-      data: adminu,
+    const user_account = {
+      email: requestBody.email,
+      password_salt,
+      password_hash,
+      is_email_verified: false,
+      created_at: new Date(),
+      updated_at: new Date(),
+      provider: 'password'
+    }
+
+    await prisma.$transaction(async (tx) => {
+      const userData = await tx.user.create({
+        data: user,
+      })
+      await tx.user_account.create({
+        data: { ...user_account, user_id: userData.id },
+      })
     })
 
     const otp = generateRandomString()
     if (!redis.isOpen) await redis.connect()
-    await redis.set(`${user.id}_otp`, otp, { EX: 600 })
+    await redis.set(`${user_account.id}_otp`, otp, { EX: 600 })
     await redis.disconnect()
 
     const emailTemplate = hbs.compile(otpTemp)
@@ -80,26 +82,20 @@ const handler = async ({ req, res }) => {
       text: 'Please verify your otp',
       html: emailTemplate({
         logo: process.env.LOGO_URL,
-        user: adminu.full_name,
+        user: user.first_name,
         otp,
       }),
     }
     await sendMail(message)
 
-    sendResponse(res, 200, {
+    return sendResponse(res, 200, {
       message: 'OTP send to registered email',
     })
   } catch (e) {
     console.log(e.message)
-    if (e.errorCode && e.errorCode < 500) {
-      sendResponse(res, e.errorCode, {
-        message: e.message,
-      })
-    } else {
-      sendResponse(res, 500, {
-        message: 'failed',
-      })
-    }
+    return sendResponse(res, e.errorCode ? e.errorCode : 500, {
+      message: e.errorCode < 500 ? e.message : 'something went wrong',
+    })
   }
 }
 

@@ -8,6 +8,8 @@ const handler = async (event) => {
   }
   const data = Buffer.concat(bodyBuffer).toString()
   req.body = JSON.parse(data || '{}')
+
+  return true
 }
 
 export default handler
