@@ -5,11 +5,13 @@ const handler = async (event) => {
   const { req, res } = event
   const { sendResponse, validateRequestMethod, isEmpty, checkHealth, validateRequiredParams, prisma } =
     await shared.getShared()
-  const requiredParams = ['tenant_id', 'name', 'display_name', 'created_by']
+  const requiredParams = ['name', 'display_name']
+
+  const tenant_id = '71df8bec-075a-48a0-9ea7-6d5f85de729c'
 
   try {
     // health check
-    checkHealth(req, res)
+    if (checkHealth(req, res)) return {}
 
     await validateRequestMethod(req, ['POST'])
     const requestBody = req?.body
@@ -33,18 +35,21 @@ const handler = async (event) => {
 
     const uniqueId = uuidv4()
 
-    console.log(prisma)
-
     const newDataAdded = await prisma.organisation.create({
       data: {
+        tenant_id,
+        created_by: req?.user?.id,
         id: uniqueId,
         updated_at: new Date(),
         created_at: new Date(),
-        ...{ requestBody },
+        ...requestBody,
       },
     })
 
-    return sendResponse(res, 200, { data: newDataAdded, message: 'Successfully created organisation' })
+    return sendResponse(res, 200, {
+      data: newDataAdded,
+      message: 'Successfully created organisation',
+    })
   } catch (e) {
     console.log(e.message)
     if (e.errorCode && e.errorCode < 500) {
