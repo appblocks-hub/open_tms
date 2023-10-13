@@ -1,11 +1,10 @@
 /* eslint-disable import/extensions */
-import { shared, env } from '@appblocks/node-sdk'
-import hbs from 'hbs'
-import otpTemp from './templates/otp-email-temp.js'
+import { shared } from "@appblocks/node-sdk";
+import hbs from "hbs";
+import otpTemp from "./templates/otp-email-temp.js";
 
-env.init()
 const handler = async (event) => {
-  const { req, res } = event
+  const { req, res } = event;
 
   const {
     sendResponse,
@@ -16,75 +15,77 @@ const handler = async (event) => {
     redis,
     sendMail,
     generateRandomString,
-  } = await shared.getShared()
+  } = await shared.getShared();
   try {
     // health check
-    if (checkHealth(req, res)) return
+    if (checkHealth(req, res)) return;
 
-    await validateRequestMethod(req, ['POST'])
+    await validateRequestMethod(req, ["POST"]);
 
-    const requestBody = req.body
+    const requestBody = req.body;
 
-    if (isEmpty(requestBody) || !requestBody.hasOwnProperty('email')) {
+    if (isEmpty(requestBody) || !requestBody.hasOwnProperty("email")) {
       return sendResponse(res, 400, {
-        message: 'Please provide a Email',
-      })
+        message: "Please provide a Email",
+      });
     }
 
-    const user = await prisma.admin_users.findFirst({
+    const user_account = await prisma.user_account.findFirst({
       where: {
         email: requestBody.email,
       },
-    })
+      include: { user: true },
+    });
 
-    if (!user) {
+    if (!user_account) {
       return sendResponse(res, 400, {
-        message: 'Invalid User ID',
-      })
+        message: "Invalid User ID",
+      });
     }
 
-    const otp = generateRandomString()
+    const otp = generateRandomString();
 
     // Store the otp with an expiry stored in env.function in seconds
-    if (!redis.isOpen) await redis.connect()
-    await redis.set(`${user.id}_otp`, otp, { EX: 600 })
-    await redis.disconnect()
+    if (!redis.isOpen) await redis.connect();
+    await redis.set(`${user_account.id}_otp`, otp, { EX: 600 });
+    await redis.disconnect();
 
-    const emailTemplate = hbs.compile(otpTemp)
+    const emailTemplate = hbs.compile(otpTemp);
+
+    const { user } = user_account;
 
     const message = {
-      to: user.email,
+      to: user_account.email,
       from: {
-        name: process.env.BB_OPEN_TMS_AUTH_MAILER_NAME,
-        email: process.env.BB_OPEN_TMS_AUTH_MAILER_EMAIL,
+        name: process.env.BB_OPEN_TMS_MAILER_NAME,
+        email: process.env.BB_OPEN_TMS_MAILER_EMAIL,
       },
-      subject: 'Verify OTP',
-      text: 'Please verify your otp',
+      subject: "Verify OTP",
+      text: "Please verify your otp",
       html: emailTemplate({
-        logo: process.env.BB_OPEN_TMS_AUTH_LOGO_URL,
+        logo: process.env.BB_OPEN_AUTH_TMS_LOGO_URL,
         user: user.full_name,
         otp,
       }),
-    }
-    await sendMail(message)
+    };
+    await sendMail(message);
 
     return sendResponse(res, 200, {
-      data: { user_id: user.id, email: user.email, name: user.full_name },
+      data: {
+        user_id: user.id,
+        user_account_id: user_account.id,
+        email: user_account.email,
+        name: user.first_name,
+      },
       message:
-        'We have sent you an email containing One time password to registered email',
-    })
+        "We have sent you an email containing One time password to registered email",
+    });
   } catch (e) {
-    console.log(e.message)
-    if (e.errorCode && e.errorCode < 500) {
-      return sendResponse(res, e.errorCode, {
-        message: e.message,
-      })
-    } else {
-      return sendResponse(res, 500, {
-        message: 'failed',
-      })
-    }
+    console.log(e.message);
+    return sendResponse(res, e.errorCode ? e.errorCode : 500, {
+      message: e.errorCode < 500 ? e.message : "something went wrong",
+    });
   }
-}
+};
 
-export default handler
+export default handler;

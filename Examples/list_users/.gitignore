@@ -2,6 +2,7 @@
 #
 ._bb_*
 .deployed.config.json
+headless-config.json
 
 # Logs
 logs

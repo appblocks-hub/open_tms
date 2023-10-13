@@ -17,4 +17,26 @@ services:
     ports:
       - '6379:6379'
 
-
+  # app:
+  #   build: .
+  #   working_dir: $home/app/preview
+  #   command:
+  #     - sh
+  #     - -c
+  #     - |
+  #       bb start 
+  #       cd ./open_tms_shared/open_tms_data
+  #       npm run db:push
+  #       npm run prisma:seed:dev
+  #       npm run prisma:generate:dev
+  #       tail -f /dev/null
+  #   ports:
+  #     - 3000:3000
+  #     - 3001:3001
+  #     - 4000:4000
+  #     - 5000:5000
+  #   volumes:
+  #     - ./:$home/app/preview
+  #   depends_on:
+  #     - postgres
+  #     - redis

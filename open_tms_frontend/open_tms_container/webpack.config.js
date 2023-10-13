@@ -1,10 +1,10 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import path from 'path'
 import webpack from 'webpack'
+import { env } from '@appblocks/node-sdk'
 
 const ModuleFederationPlugin = webpack.container.ModuleFederationPlugin
 
-import { env } from '@appblocks/node-sdk'
 env.init()
 
 const __dirname = path.resolve()

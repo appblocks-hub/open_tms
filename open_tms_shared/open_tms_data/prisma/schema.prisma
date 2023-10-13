@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("BB_OPEN_TMS_AUTH_DATABASE_URL")
+  url      = env("BB_OPEN_TMS_DATABASE_URL")
 }
 
 generator client {
@@ -73,22 +73,22 @@ model user {
   ticket_activity_created_by_fk             ticket_activity[]             @relation("ticket_activity_created_by")
   ticket_activity_updated_by_fk             ticket_activity[]             @relation("ticket_activity_updated_by")
 
-  org_member_roles_fk org_member_roles[] @relation("org_member_roles_user")
-
-  user_account_user_id_fk user_account[] @relation("user_account_user_id")
+  org_member_roles org_member_roles[] @relation("org_member_roles_user")
+  user_accounts user_account[] @relation("user_account_user_id")
 }
 
 model user_account {
-  id            String    @id @default(uuid())
-  email         String
-  provider      String // 0 password 1 google
-  password_hash String?
-  password_salt String?
-  created_at    DateTime? @default(now())
-  updated_at    DateTime? @updatedAt
-  user_id       String
+  id                String    @id @default(uuid())
+  email             String
+  provider          String // 0 password 1 google
+  password_hash     String?
+  password_salt     String?
+  created_at        DateTime? @default(now())
+  updated_at        DateTime? @updatedAt
+  user_id           String
+  is_email_verified Boolean   @default(false)
 
-  user_account_user_id user @relation("user_account_user_id", fields: [user_id], references: [id])
+  user user @relation("user_account_user_id", fields: [user_id], references: [id])
 
   @@unique([email, provider], name: "emailIdentifier")
 }
@@ -209,6 +209,8 @@ model stage {
   process_path_from_stage_fk       process_path[]    @relation("process_path_from_stage")
   process_path_to_stage_fk         process_path[]    @relation("process_path_to_stage")
   ticket_activity_current_stage_fk ticket_activity[] @relation("ticket_activity_current_stage")
+  @@unique([name,process_id], name: "stage_name_process_id")
+
 }
 
 model process_path {
@@ -284,14 +286,14 @@ model ticket_activity {
   updated_by         String?
   created_at         DateTime? @default(now())
   updated_at         DateTime? @updatedAt
-  assignee_id        String
+  assignee_id        String?
   current_stage      String // draft --> 5 th pending
-  remark             String?    @db.Text
+  remark             String?   @db.Text
   ticket_revision_id String
 
-  ticket_activity_created_by         user?            @relation("ticket_activity_created_by", fields: [created_by], references: [id])
-  ticket_activity_updated_by         user?            @relation("ticket_activity_updated_by", fields: [updated_by], references: [id])
-  ticket_activity_assignee_id        org_member      @relation("ticket_activity_assignee_id", fields: [assignee_id], references: [id])
-  ticket_activity_current_stage      stage         @relation("ticket_activity_current_stage", fields: [current_stage], references: [id])
+  ticket_activity_created_by         user?           @relation("ticket_activity_created_by", fields: [created_by], references: [id])
+  ticket_activity_updated_by         user?           @relation("ticket_activity_updated_by", fields: [updated_by], references: [id])
+  ticket_activity_assignee_id        org_member?     @relation("ticket_activity_assignee_id", fields: [assignee_id], references: [id])
+  ticket_activity_current_stage      stage           @relation("ticket_activity_current_stage", fields: [current_stage], references: [id])
   ticket_activity_ticket_revision_id ticket_revision @relation("ticket_activity_ticket_revision_id", fields: [ticket_revision_id], references: [id])
 }

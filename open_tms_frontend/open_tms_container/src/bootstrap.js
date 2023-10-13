@@ -1,12 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import App from "./App";
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 
-const Index = () => (
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-);
+import App from './App'
 
-ReactDOM.createRoot(document.getElementById("root")).render(<Index />);
+const Index = () => <App />
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Index />)

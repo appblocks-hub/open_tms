@@ -16,7 +16,6 @@ const sendResponse = (res, code, data, type = 'application/json') => {
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
     'Content-Type': type,
   }
-  console.log('END:', data, code)
 
   res.writeHead(code, headers)
   res.write(JSON.stringify(data))
@@ -58,6 +57,7 @@ function validateRequiredParams(req, requiredParams) {
 }
 
 export default {
+  redis,
   sendResponse,
   checkHealth,
   isEmpty,

@@ -3,7 +3,7 @@ import { useFederatedComponent } from "@appblocks/js-sdk";
 
 const ResetPassword = () => {
   const system = {
-    url: process.env.BB_AUTH_ELEMENTS_URL,
+    url: process.env.BB_OPEN_TMS_ELEMENTS_URL,
     scope: "remotes",
     module: "./open_tms_auth_fe_reset_password",
   };

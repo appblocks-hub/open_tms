@@ -8,9 +8,8 @@ const handler = async (event) => {
   if (req.params.health === 'health') {
     return sendResponse(res, 200, { message: 'Health check success' })
   }
-
-  console.log(req.user);
-  console.log(req.body);
+  console.log(req.user)
+  console.log(req.body)
   /**
    * Add close ticket logic here
    */

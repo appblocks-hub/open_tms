@@ -1,9 +1,7 @@
 import { createClient } from 'redis'
-import { env } from '@appblocks/node-sdk'
-env.init()
 
 const redis = createClient({
-  url: `redis://${process.env.BB_OPEN_TMS_AUTH_REDIS_HOST}:${process.env.BB_OPEN_TMS_AUTH_REDIS_PORT}`,
+  url: `redis://${process.env.BB_OPEN_TMS_REDIS_HOST}:${process.env.BB_OPEN_TMS_REDIS_PORT}`,
 })
 
 redis.on('error', (err) => {
