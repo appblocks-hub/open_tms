@@ -66,25 +66,6 @@ const otpTemp = `
           </td>
         </tr>
         <!-- Verify section Ends -->
-
-         <!-- Footer Starts -->
-         <tr>
-          <td align="center" bgcolor="#ffffff" style="
-                font-size: 14px; 
-                font-weight:500; 
-                line-height: 16px;
-                color:#010101;
-                border-top: 1px solid #D8D8D8;
-                background-color: #ffffff;
-                padding: 49px 43px 39px 43px;
-              ">
-               <p>Need onboarding support? </p>
-               <p style=" font-weight:400; padding-top: 8px;">Please e-mail us at sales@cash.com or
-                call us toll-free at 1-866-567-5467</p>
-               <p style="padding-top: 15px;">Powered by Cash 4 Construction</p>
-          </td>
-        </tr>
-        <!-- footer Ends -->
                 
         
           

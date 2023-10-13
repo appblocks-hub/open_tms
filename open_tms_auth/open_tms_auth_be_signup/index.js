@@ -5,8 +5,6 @@ import { shared } from '@appblocks/node-sdk'
 import otpTemp from './templates/otp-temp.js'
 import validateSignupInput from './validation.js'
 
-
-
 /**
  * @swagger
  * /open_tms_auth/open_tms_auth_be_signup:
@@ -41,7 +39,7 @@ import validateSignupInput from './validation.js'
  *         description: Created
  *       '200':
  *         description: Ok
-*/
+ */
 const handler = async ({ req, res }) => {
   const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth, generateRandomString, sendMail, redis } =
     await shared.getShared()
@@ -72,8 +70,8 @@ const handler = async ({ req, res }) => {
       })
     }
 
-    const password_salt = await genSalt()
-    const password_hash = await hash(requestBody.password, 10)
+    const password_salt = await genSalt(10)
+    const password_hash = await hash(requestBody.password, password_salt)
 
     const user = {
       first_name: requestBody.first_name,
