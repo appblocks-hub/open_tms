@@ -8,16 +8,24 @@ import otpTemp from "./templates/otp-email-temp.js";
  * /open_tms_auth/open_tms_auth_be_send_otp_for_verification:
  *   post:
  *     summary: Send otp for verification
- *     description: Send otp for verification.
+ *     description: Send otp for verification
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: The user's  email
+ *                 example: testuser5@mailinator.com
  *     responses:
  *       '201':
  *         description: Created
  *       '200':
  *         description: Ok
- *     schemes:
- *       - http
- *       - https
- */
+*/
 const handler = async (event) => {
   const { req, res } = event;
 

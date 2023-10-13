@@ -1,6 +1,34 @@
 import { shared, env } from "@appblocks/node-sdk";
 
 env.init();
+
+/**
+ * @swagger
+ * /open_tms_auth/open_tms_auth_be_verify_otp:
+ *   post:
+ *     summary: Verify otp for a given email
+ *     description: Verify otp for a given email
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               otp:
+ *                 type: string
+ *                 description: The otp sent to the email
+ *                 example: 7I2aSY
+ *               email:
+ *                 type: string
+ *                 description: The user's email
+ *                 example: testuser5@mailinator.com
+ *     responses:
+ *       '201':
+ *         description: Created
+ *       '200':
+ *         description: Ok
+*/
 const handler = async (event) => {
   const { req, res } = event;
 

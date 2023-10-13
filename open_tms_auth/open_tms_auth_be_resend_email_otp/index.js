@@ -7,19 +7,27 @@ env.init()
 
 /**
  * @swagger
- * /open_tms_auth/open_tms_auth_be_reset_password:
+ * /open_tms_auth/open_tms_auth_be_resend_email_otp:
  *   post:
- *     summary: Reset password for a user
- *     description: Reset password for a user.
+ *     summary: Resend otp for a given email
+ *     description: Resend otp for a given email
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: The user's email
+ *                 example: testuser5@mailinator.com
  *     responses:
  *       '201':
  *         description: Created
  *       '200':
  *         description: Ok
- *     schemes:
- *       - http
- *       - https
- */
+*/
 const handler = async ({ req, res }) => {
   const { sendResponse, isEmpty, prisma, validateRequestMethod, generateRandomString, sendMail, redis, checkHealth } =
     await shared.getShared()

@@ -5,18 +5,30 @@ import { hash, genSalt } from "bcrypt";
 /**
  * @swagger
  * /open_tms_auth/open_tms_auth_be_reset_password:
- *   post:
- *     summary: Reset password for a user
- *     description: Reset password for a user.
+ *   put:
+ *     summary: Reset password for an existing user
+ *     description: Reset password for an existing user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_auth_token:
+ *                 type: string
+ *                 description: The user's auth token received from verify otp api
+ *                 example: 5APZC8fAryDf8PnOtgvWcdS429Jel60d
+ *               new_password:
+ *                 type: string
+ *                 description: The user's  new password
+ *                 example: TestPassword@97
  *     responses:
  *       '201':
  *         description: Created
  *       '200':
  *         description: Ok
- *     schemes:
- *       - http
- *       - https
- */
+*/
 const handler = async (event) => {
   const { req, res } = event;
 

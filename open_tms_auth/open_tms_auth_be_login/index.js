@@ -7,17 +7,29 @@ import jwt from "jsonwebtoken";
  * @swagger
  * /open_tms_auth/open_tms_auth_be_login:
  *   post:
- *     summary: login for a user
- *     description: login for a user.
+ *     summary: Login for a new user
+ *     description: Login for a new user.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: The user's email
+ *                 example: testuser5@mailinator.com
+ *               password:
+ *                 type: string
+ *                 description: The user's password
+ *                 example: Password@97
  *     responses:
  *       '201':
  *         description: Created
  *       '200':
  *         description: Ok
- *     schemes:
- *       - http
- *       - https
- */
+*/
 const handler = async ({ req, res }) => {
   const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth } =
     await shared.getShared();
