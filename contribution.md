@@ -33,39 +33,7 @@ This will set up the database in your local machine with seed data.
 2. Ask in the issue comment for getting the task assigned to you
 3. Check the issue you are working on and refer to the issue description to understand the intended workflow.
 4. Understand the database schema and function block requirements.
-5. Complete the task and perform a git push.
-6. Raise a pull request against the original repository's main branch.
-
-7. Sample api docs sample for a function block is
-
-```
-/**
- * @swagger
- * /rootPackageName/function1:
- *   post:
- *     summary: Retrieve a list of JSONPlaceholder users for function1
- *     description: Retrieve a list of users from JSONPlaceholder.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               parameter1:
- *                 type: string
- *     responses:
- *        '201':
- *          description: Created
- *        '200':
- *          description: Ok
- *
-*/
-```
-
-The docs can viewed via the function_url/docs route.
-
-8. Using shared block inside function blocks.
+5. Using shared block inside function blocks.
 
 Shared blocks are global blocks that can be utilized across all other function blocks. Functions exported from shared blocks can be accessed in any function block using `@appblocks/node-sdk`. Below is a code snippet illustrating this:
 
@@ -78,7 +46,7 @@ const handler = async ({ req, res }) => {
 
 ```
 
-9. Using middleware block inside function blocks
+6. Using middleware block inside function blocks
 
 To incorporate custom middleware, you can create a function block and assign it as middleware in the block.config.json file.
  
@@ -108,5 +76,39 @@ Format to pass middlewares in package block.config.json
       }
 ```
 The order of middleware execution follows the order in which they are defined in the array. For package-level middlewares (at the start of the package), they will be executed before the middlewares defined in the block's configuration.
+
+7. Complete the task and perform a git push.
+8. Raise a pull request against the original repository's main branch.
+
+
+9. Sample api docs sample for a function block is
+
+```
+/**
+ * @swagger
+ * /rootPackageName/function1:
+ *   post:
+ *     summary: Retrieve a list of JSONPlaceholder users for function1
+ *     description: Retrieve a list of users from JSONPlaceholder.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               parameter1:
+ *                 type: string
+ *     responses:
+ *        '201':
+ *          description: Created
+ *        '200':
+ *          description: Ok
+ *
+*/
+```
+
+The docs can viewed via the function_url/docs route.
+
 
 10. Please do add unit tests in separate test.spec file.Please use jest as test runner framework.Its preferrable.
