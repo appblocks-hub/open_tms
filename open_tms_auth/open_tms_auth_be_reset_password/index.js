@@ -2,6 +2,21 @@ import { shared } from "@appblocks/node-sdk";
 import { compare } from "bcrypt";
 import { hash, genSalt } from "bcrypt";
 
+/**
+ * @swagger
+ * /open_tms_auth/open_tms_auth_be_reset_password:
+ *   post:
+ *     summary: Reset password for a user
+ *     description: Reset password for a user.
+ *     responses:
+ *       '201':
+ *         description: Created
+ *       '200':
+ *         description: Ok
+ *     schemes:
+ *       - http
+ *       - https
+ */
 const handler = async (event) => {
   const { req, res } = event;
 

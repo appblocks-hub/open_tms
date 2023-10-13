@@ -5,6 +5,40 @@ import { shared } from '@appblocks/node-sdk'
 import otpTemp from './templates/otp-temp.js'
 import validateSignupInput from './validation.js'
 
+
+/**
+ * @swagger
+ * /open_tms_auth/open_tms_auth_be_signup:
+ *   post:
+ *     summary: Signup a new user
+ *     description: Signup a new user.
+ *     parameters:
+ *       - name: first_name
+ *         in: body
+ *         type: string
+ *         required: true
+ *         description: The first name of the user.
+  *       - name: last_name
+ *         in: body
+ *         type: string
+ *         required: true
+ *         description: The last name of the user.
+ *       - name: email
+ *         in: body
+ *         type: string
+ *         required: true
+ *         description: The email of the user.
+ *       - name: password
+ *         in: body
+ *         type: string
+ *         required: true
+ *         description: The password of the user.
+ *     responses:
+ *       '201':
+ *         description: Created
+ *       '200':
+ *         description: Ok
+ */
 const handler = async ({ req, res }) => {
   const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth, generateRandomString, sendMail, redis } =
     await shared.getShared()

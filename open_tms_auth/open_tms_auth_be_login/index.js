@@ -2,6 +2,22 @@ import { compare } from "bcrypt";
 import { shared } from "@appblocks/node-sdk";
 import jwt from "jsonwebtoken";
 
+
+/**
+ * @swagger
+ * /open_tms_auth/open_tms_auth_be_login:
+ *   post:
+ *     summary: login for a user
+ *     description: login for a user.
+ *     responses:
+ *       '201':
+ *         description: Created
+ *       '200':
+ *         description: Ok
+ *     schemes:
+ *       - http
+ *       - https
+ */
 const handler = async ({ req, res }) => {
   const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth } =
     await shared.getShared();

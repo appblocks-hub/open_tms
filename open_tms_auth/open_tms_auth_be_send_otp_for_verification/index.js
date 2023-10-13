@@ -3,6 +3,21 @@ import { shared } from "@appblocks/node-sdk";
 import hbs from "hbs";
 import otpTemp from "./templates/otp-email-temp.js";
 
+/**
+ * @swagger
+ * /open_tms_auth/open_tms_auth_be_send_otp_for_verification:
+ *   post:
+ *     summary: Send otp for verification
+ *     description: Send otp for verification.
+ *     responses:
+ *       '201':
+ *         description: Created
+ *       '200':
+ *         description: Ok
+ *     schemes:
+ *       - http
+ *       - https
+ */
 const handler = async (event) => {
   const { req, res } = event;
 

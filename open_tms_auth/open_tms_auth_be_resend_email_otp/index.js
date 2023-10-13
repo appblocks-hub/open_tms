@@ -4,6 +4,22 @@ import hbs from 'hbs'
 import otpTemp from './templates/otp-temp.js'
 
 env.init()
+
+/**
+ * @swagger
+ * /open_tms_auth/open_tms_auth_be_reset_password:
+ *   post:
+ *     summary: Reset password for a user
+ *     description: Reset password for a user.
+ *     responses:
+ *       '201':
+ *         description: Created
+ *       '200':
+ *         description: Ok
+ *     schemes:
+ *       - http
+ *       - https
+ */
 const handler = async ({ req, res }) => {
   const { sendResponse, isEmpty, prisma, validateRequestMethod, generateRandomString, sendMail, redis, checkHealth } =
     await shared.getShared()
