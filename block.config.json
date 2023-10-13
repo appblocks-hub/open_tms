@@ -9,12 +9,16 @@
   },
   "parentBlockIDs": [],
   "isPublic": true,
-  "supportedAppblockVersions": ["1.0.0"],
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
   "repoType": "mono",
   "middlewares": [
     {
       "executeOnBlocks": [],
-      "middlewaresList": ["open_tms_body_parser_middleware"]
+      "middlewaresList": [
+        "open_tms_body_parser_middleware"
+      ]
     }
   ],
   "dependencies": {
@@ -26,9 +30,6 @@
     },
     "open_tms_shared": {
       "directory": "open_tms_shared"
-    },
-    "open_tms_data": {
-      "directory": "open_tms_data"
     },
     "open_tms_middleware": {
       "directory": "open_tms_middleware"
