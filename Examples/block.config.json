@@ -14,10 +14,16 @@
   "supportedAppblockVersions": [
     "1.0.0"
   ],
+  "middlewares": [
+    {
+      "executeOnBlocks": [],
+      "middlewaresList": ["open_tms_auth_middleware"]
+    }
+  ],
   "isPublic": true,
   "dependencies": {
     "list_users": {
-      "directory": "list_users"
+      "directory": "list_tickets"
     }
   }
 }

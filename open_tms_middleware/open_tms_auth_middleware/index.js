@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 const handler = async (event) => {
   const { req, res } = event
 
-  const whiteList = []
+  const whiteList = ['open_tms_auth*']
   for (const whiteListPath of whiteList) {
     const isInclude = whiteListPath.includes('*') && req.path.includes(whiteListPath.replace('*', ''))
     if (isInclude || whiteListPath === req.path) return true

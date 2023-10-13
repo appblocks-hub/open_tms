@@ -1,11 +1,11 @@
 {
   "blockId": "tLLQWiSeZ3UNMNXSiKdWp",
-  "name": "list_users",
+  "name": "list_tickets",
   "type": "function",
   "source": {
     "https": "https://github.com/appblocks-hub/open_tms.git",
     "ssh": "git@github.com:appblocks-hub/open_tms.git",
-    "branch": "block_list_users"
+    "branch": "block_list_tickets"
   },
   "parentBlockIDs": [
     "cjFjUTS-eRkzpj10RRol-",

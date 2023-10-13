@@ -32,6 +32,9 @@
     },
     "open_tms_frontend": {
       "directory": "open_tms_frontend"
+    },
+    "Examples": {
+      "directory": "Examples"
     }
   }
 }

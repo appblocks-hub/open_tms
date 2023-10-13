@@ -148,8 +148,8 @@ async function createUser(prisma) {
     },
   })
 
-  const salt = await genSalt(10)
-  const password = await hash('Admin@01', 10)
+  const salt = await genSalt()
+  const password = await hash('Password@97', 10)
 
   await prisma.user_account.upsert({
     where: {
@@ -254,8 +254,8 @@ async function createMemberUsers(prisma) {
     },
   })
 
-  const salt = await genSalt(10)
-  const mR1password = await hash('memberUser1@01', 10)
+  const salt = await genSalt()
+  const mR1password = await hash('Password@97', 10)
 
   await prisma.user_account.upsert({
     where: {
@@ -287,7 +287,7 @@ async function createMemberUsers(prisma) {
     },
   })
 
-  const mR2Password = await hash('memberUser2@01', 10)
+  const mR2Password = await hash('Password@97', 10)
 
   await prisma.user_account.upsert({
     where: {
@@ -320,7 +320,7 @@ async function createMemberUsers(prisma) {
     },
   })
 
-  const mR3password = await hash('memberUser3@01', 10)
+  const mR3password = await hash('Password@97', 10)
 
   await prisma.user_account.upsert({
     where: {
@@ -353,7 +353,7 @@ async function createMemberUsers(prisma) {
     },
   })
 
-  const mR4Password = await hash('memberUser4@01', 10)
+  const mR4Password = await hash('Password@97', 10)
 
   await prisma.user_account.upsert({
     where: {
