@@ -30,7 +30,7 @@ This will set up the database in your local machine with seed data.
 ## Contributing Process
 
 1. Identify an issue you want to work on and check [here](https://github.com/appblocks-hub/challenges) 
-2. Just let us know that you are working on the issue, See the already raised PRs as well. We will be evaluating all PRs and swags will be given to those who raise the best PRs first.
+2. Just let us know that you are working on the issue, See the already raised PRs as well. We will be evaluating all PRs and swags will be given to those who raise the best PRs first, before 29th of October.
 3. Check the issue you are working on and refer to the issue description to understand the intended workflow.
 4. Understand the database schema and function block requirements.
 5. Use of proper documentations and writing test cases(please refer our docs for running test cases with Jest) will give you more chances.
