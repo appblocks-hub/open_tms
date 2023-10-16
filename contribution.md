@@ -75,6 +75,8 @@ Format to pass middlewares in package block.config.json
         ],
       }
 ```
+Specific middlewares for blocks can be whitelisted by passing the block_name in the whitelist array in the middleware source code.
+
 The order of middleware execution follows the order in which they are defined in the array. For package-level middlewares (at the start of the package), they will be executed before the middlewares defined in the block's configuration.
 
 7. Complete the task and perform a git push.
