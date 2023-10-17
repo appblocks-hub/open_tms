@@ -2,7 +2,7 @@ import { shared } from '@appblocks/node-sdk';
 
 const handler = async (event) => {
   const { req, res } = event;
-  const { sendResponse, prism } = await shared.getShared();
+  const { sendResponse, prisma } = await shared.getShared();
 
   // Health check
   if (req.params.health === 'health') {
