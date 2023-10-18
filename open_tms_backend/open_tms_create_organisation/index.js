@@ -46,6 +46,13 @@ const handler = async (event) => {
       },
     })
 
+    if (!newDataAdded) {
+      console.log('something went wrong while creating organisation....')
+      return sendResponse(res, 400, {
+        message: 'Something went wrong while creating organisation',
+      })
+    }
+
     return sendResponse(res, 200, {
       data: newDataAdded,
       message: 'Successfully created organisation',

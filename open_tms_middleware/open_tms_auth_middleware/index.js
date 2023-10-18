@@ -11,7 +11,7 @@ const handler = async (event) => {
 
   // validate user authentication
   try {
-    const secretKey = process.env.BB_OPEN_TMS_AUTH_SECRET_KEY.toString()
+    const secretKey = process.env.BB_OPEN_TMS_SECRET_KEY.toString()
     const token = req.headers.authorization
 
     if (!token) throw new Error('No token found')
