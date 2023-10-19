@@ -19,7 +19,7 @@ import otpTemp from './templates/otp-email-temp.js'
  *               email:
  *                 type: string
  *                 description: The user's  email
- *                 example: testuser5@mailinator.com
+ *                 example: memberUser4@mailinator.com
  *     responses:
  *       '201':
  *         description: Created

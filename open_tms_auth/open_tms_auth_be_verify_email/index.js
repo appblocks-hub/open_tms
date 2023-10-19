@@ -67,7 +67,7 @@ const handler = async (event) => {
       subject: 'verify otp',
       text: 'Please verify your otp',
       html: emailTemplate({
-        logo: process.env.BB_OPEN_TMS_AUTH_LOGO_URL,
+        logo: process.env.BB_OPEN_TMS_LOGO_URL,
         user: user.first_name,
         otp,
       }),
