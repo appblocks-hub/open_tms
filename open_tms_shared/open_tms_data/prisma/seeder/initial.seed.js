@@ -29,7 +29,7 @@ const orgMemberUser1ID = '940c365b-b75b-4fc9-a0c4-c0e6c8496539'
 
 const orgMemberRolesUser1ID = '74049637-630e-46b0-8f8b-1f0cc754fb93'
 
-const memberUser1AccountID="e614be04-6f81-446c-84d1-8dae439d80c6"
+const memberUser1AccountID = "e614be04-6f81-446c-84d1-8dae439d80c6"
 
 const departmentUser1ID = 'a50ea42f-ba55-4c18-813a-0492b59863e2'
 
@@ -41,7 +41,7 @@ const orgMemberRolesUser2ID = '74d1ab12-e32b-4168-87d5-91644b3b0ce6'
 
 const departmentUser2ID = '9816aa00-13ea-4ece-9893-a408599bb8f0'
 
-const memberUser2AccountID="6f97e82a-e114-478b-a5d4-498f5af5ec53"
+const memberUser2AccountID = "6f97e82a-e114-478b-a5d4-498f5af5ec53"
 
 const memberUser3ID = '6e7ddb72-3dba-4d1a-99fe-5a09d2914c6e'
 
@@ -51,7 +51,7 @@ const orgMemberRolesUser3ID = '07f264b0-7e24-4967-8b4a-5a2a5bff82ef'
 
 const departmentUser3ID = '865dfd85-ab3c-493b-8aea-2a194df9b7f1'
 
-const memberUser3AccountID="7908a9ac-1fa2-432c-a6f8-1aa58a52b80b"
+const memberUser3AccountID = "7908a9ac-1fa2-432c-a6f8-1aa58a52b80b"
 
 const memberUser4ID = '3ac14aca-0e57-4506-90fe-6b476d81117a'
 
@@ -61,7 +61,7 @@ const orgMemberRolesUser4ID = 'ea0dd9c3-4c4e-430d-a028-e47ff9685946'
 
 const departmentUser4ID = '2de50fb1-1e12-4064-9f9b-72b9d8c6b27a'
 
-const memberUser4AccountID="39336571-3643-48ac-a9ff-6ae360e2efbe"
+const memberUser4AccountID = "39336571-3643-48ac-a9ff-6ae360e2efbe"
 
 const process1ID = '2de50fb1-1e12-4064-9f9b-72b9d8c6b27a'
 
@@ -117,6 +117,9 @@ const t2Activity5ID = '99c5df8d-3b22-44ff-bee1-e4cb124e4515'
 const t2Activity6ID = '04a3cf74-98bb-454d-9d5a-d57d93224172'
 const t2Activity7ID = '8111c92b-405b-437b-8b32-9dfa012c285d'
 
+const sampleTicketTypeID1 = '81f9a658-9b1a-4cf5-ba94-460411ec9bb9'
+const sampleTicketTypeID2 = 'c1cbdd3d-4991-4782-8f30-a898d9517c55'
+
 async function createUser(prisma) {
   const tenant = await prisma.tenant.upsert({
     where: {
@@ -163,7 +166,7 @@ async function createUser(prisma) {
       password_salt: salt,
       provider: "password",
       email: 'appblocksadmin@mailinator.com',
-      is_email_verified:true
+      is_email_verified: true
 
     },
   })
@@ -271,7 +274,7 @@ async function createMemberUsers(prisma) {
       password_salt: salt,
       provider: "password",
       email: 'memberUser1@mailinator.com',
-      is_email_verified:true
+      is_email_verified: true
     },
   })
 
@@ -304,7 +307,7 @@ async function createMemberUsers(prisma) {
       password_salt: salt,
       provider: "password",
       email: 'memberUser2@mailinator.com',
-      is_email_verified:true
+      is_email_verified: true
     },
   })
 
@@ -338,7 +341,7 @@ async function createMemberUsers(prisma) {
       password_salt: salt,
       provider: "password",
       email: 'memberUser3@mailinator.com',
-      is_email_verified:true
+      is_email_verified: true
 
     },
   })
@@ -373,7 +376,7 @@ async function createMemberUsers(prisma) {
       password_salt: salt,
       provider: "password",
       email: 'memberUser4@mailinator.com',
-      is_email_verified:true
+      is_email_verified: true
 
     },
   })
@@ -950,6 +953,7 @@ async function createTicket(prisma) {
       status: 0,
       organisation_id: organisationID,
       created_by: memberUser1ID,
+      ticket_type_id: sampleTicketTypeID1,
     },
   })
 
@@ -963,6 +967,7 @@ async function createTicket(prisma) {
       status: 0,
       organisation_id: organisationID,
       created_by: memberUser2ID,
+      ticket_type_id: sampleTicketTypeID2,
     },
   })
 
@@ -1021,14 +1026,14 @@ async function createTicket(prisma) {
       ticket_revision_id: t2Revision1ID,
       created_by: memberUser1ID,
       current_stage: ticketRaisedStageID,
-      assignee_id:orgMemberUser2ID
+      assignee_id: orgMemberUser2ID
     },
   })
 
 
 }
 
-async function updateTicket(prisma){
+async function updateTicket(prisma) {
 
   const t1Activity2 = await prisma.ticket_activity.upsert({
     where: {
@@ -1041,7 +1046,7 @@ async function updateTicket(prisma){
       created_by: memberUser1ID,
       current_stage: ticketRejectedStageID,
       assignee_id: operationsDepartmentOrgMemberID,
-      remark:"Ticket Rejection1"
+      remark: "Ticket Rejection1"
     },
   })
 
@@ -1112,7 +1117,7 @@ async function updateTicket(prisma){
       ticket_revision_id: t2Revision1ID,
       created_by: memberUser1ID,
       current_stage: ticketReassignedStageID,
-      assignee_id:orgMemberUser3ID
+      assignee_id: orgMemberUser3ID
     },
   })
 
@@ -1142,7 +1147,7 @@ async function updateTicket(prisma){
       ticket_revision_id: t2Revision2ID,
       created_by: memberUser1ID,
       current_stage: ticketRevisedStageID,
-      assignee_id:orgMemberUser3ID
+      assignee_id: orgMemberUser3ID
     },
   })
 
@@ -1156,7 +1161,7 @@ async function updateTicket(prisma){
       ticket_revision_id: t2Revision2ID,
       created_by: memberUser1ID,
       current_stage: ticketReassignedStageID,
-      assignee_id:orgMemberUser4ID
+      assignee_id: orgMemberUser4ID
     },
   })
 
@@ -1185,7 +1190,7 @@ async function updateTicket(prisma){
       ticket_revision_id: t2Revision3ID,
       created_by: memberUser1ID,
       current_stage: ticketRevisedStageID,
-      assignee_id:orgMemberUser4ID
+      assignee_id: orgMemberUser4ID
     },
   })
 
@@ -1199,7 +1204,7 @@ async function updateTicket(prisma){
       ticket_revision_id: t2Revision3ID,
       created_by: memberUser1ID,
       current_stage: ticketResolvedStageID,
-      assignee_id:orgMemberUser4ID
+      assignee_id: orgMemberUser4ID
     },
   })
 
@@ -1213,7 +1218,35 @@ async function updateTicket(prisma){
       ticket_revision_id: t2Revision3ID,
       created_by: memberUser1ID,
       current_stage: ticketClosedStageID,
-      assignee_id:orgMemberUser4ID
+      assignee_id: orgMemberUser4ID
+    },
+  })
+}
+
+async function createTicketType(prisma) {
+  const sampleTicketType1 = await prisma.ticket_types.upsert({
+    where: {
+      id: sampleTicketTypeID1,
+    },
+    update: {},
+    create: {
+      id: sampleTicketTypeID1,
+      label: 'Support',
+      organisation_id: organisationID,
+
+      created_by: memberUser1ID,
+    },
+  })
+  const sampleTicketType2 = await prisma.ticket_types.upsert({
+    where: {
+      id: sampleTicketTypeID2,
+    },
+    update: {},
+    create: {
+      id: sampleTicketTypeID2,
+      label: 'Internal',
+      organisation_id: organisationID,
+      created_by: memberUser1ID,
     },
   })
 }
@@ -1226,5 +1259,6 @@ export {
   createDepartmentsAndAddUsers,
   createProcess,
   createTicket,
-  updateTicket
+  updateTicket,
+  createTicketType
 }
