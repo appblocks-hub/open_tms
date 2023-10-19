@@ -104,7 +104,9 @@ const handler = async ({ req, res }) => {
 
     const otp = generateRandomString()
     if (!redis.isOpen) await redis.connect()
-    await redis.set(`${user_account_id}_otp`, otp, { EX: 600 })
+    await redis.set(`${user_account_id}_otp`, otp, {
+      EX: Number(process.env.BB_OPEN_TMS_AUTH_OTP_EXPIRY_TIME_IN_SECONDS),
+    })
     await redis.disconnect()
 
     const emailTemplate = hbs.compile(otpTemp)
