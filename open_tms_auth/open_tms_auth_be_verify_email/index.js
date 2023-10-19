@@ -50,7 +50,7 @@ const handler = async (event) => {
     // Store the otp with an expiry stored in env.function in seconds
     if (!redis.isOpen) await redis.connect()
     await redis.set(`${user_account.id}_otp`, otp, {
-      EX: Number(process.env.BB_OPEN_TMS_AUTH_OTP_EXPIRY_TIME_IN_SECONDS),
+      EX: Number(process.env.BB_OPEN_TMS_OTP_EXPIRY_TIME_IN_SECONDS),
     })
     await redis.disconnect()
 

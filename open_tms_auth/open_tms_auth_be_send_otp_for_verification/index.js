@@ -71,7 +71,7 @@ const handler = async (event) => {
     // Store the otp with an expiry stored in env.function in seconds
     if (!redis.isOpen) await redis.connect()
     await redis.set(`${user_account.id}_otp`, otp, {
-      EX: Number(process.env.BB_OPEN_TMS_AUTH_OTP_EXPIRY_TIME_IN_SECONDS),
+      EX: Number(process.env.BB_OPEN_TMS_OTP_EXPIRY_TIME_IN_SECONDS),
     })
     await redis.disconnect()
 
@@ -88,7 +88,7 @@ const handler = async (event) => {
       subject: 'Verify OTP',
       text: 'Please verify your otp',
       html: emailTemplate({
-        logo: process.env.BB_OPEN_AUTH_TMS_LOGO_URL,
+        logo: process.env.BB_OPEN_TMS_LOGO_URL,
         user: user.first_name,
         otp,
       }),
