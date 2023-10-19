@@ -1,18 +1,23 @@
 import { shared } from '@appblocks/node-sdk'
 
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
 
 /**
  * @swagger
  * /Examples/list_tickets:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     summary: Retrieve the list of tickets for the user
  *     description: Retrieve the list of tickets for the user.
- *     parameters:
- *       - name: Authorization
- *         in: header
- *         type: string
- *         required: true
- *         description: Enter the token with the Bearer prefix, e.g., "Bearer abcde12345"
  *     responses:
  *       '201':
  *         description: Created

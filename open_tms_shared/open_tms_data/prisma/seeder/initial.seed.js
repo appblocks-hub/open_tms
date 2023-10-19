@@ -163,6 +163,8 @@ async function createUser(prisma) {
       password_salt: salt,
       provider: "password",
       email: 'appblocksadmin@mailinator.com',
+      is_email_verified:true
+
     },
   })
 
@@ -269,6 +271,7 @@ async function createMemberUsers(prisma) {
       password_salt: salt,
       provider: "password",
       email: 'memberUser1@mailinator.com',
+      is_email_verified:true
     },
   })
 
@@ -301,6 +304,7 @@ async function createMemberUsers(prisma) {
       password_salt: salt,
       provider: "password",
       email: 'memberUser2@mailinator.com',
+      is_email_verified:true
     },
   })
 
@@ -334,6 +338,8 @@ async function createMemberUsers(prisma) {
       password_salt: salt,
       provider: "password",
       email: 'memberUser3@mailinator.com',
+      is_email_verified:true
+
     },
   })
 
@@ -367,6 +373,8 @@ async function createMemberUsers(prisma) {
       password_salt: salt,
       provider: "password",
       email: 'memberUser4@mailinator.com',
+      is_email_verified:true
+
     },
   })
 

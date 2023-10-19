@@ -2,7 +2,6 @@ import { compare } from "bcrypt";
 import { shared } from "@appblocks/node-sdk";
 import jwt from "jsonwebtoken";
 
-
 /**
  * @swagger
  * /open_tms_auth/open_tms_auth_be_login:
@@ -29,7 +28,7 @@ import jwt from "jsonwebtoken";
  *         description: Created
  *       '200':
  *         description: Ok
-*/
+ */
 const handler = async ({ req, res }) => {
   const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth } =
     await shared.getShared();
@@ -56,6 +55,7 @@ const handler = async ({ req, res }) => {
     });
 
     if (!user_account) {
+      console.log("no user account....");
       return sendResponse(res, 400, {
         message: "Invalid email/password",
       });
@@ -69,7 +69,7 @@ const handler = async ({ req, res }) => {
     ).catch(() => false);
 
     if (!isPasswordMatching) {
-      console.log(isPasswordMatching);
+      console.log(isPasswordMatching, "password not matching.....");
       return sendResponse(res, 401, {
         message: "Invalid email/password",
       });
@@ -92,22 +92,25 @@ const handler = async ({ req, res }) => {
       is_email_verified: user_account.is_email_verified,
     };
 
-    const secretKey = process.env.BB_OPEN_TMS_AUTH_SECRET_KEY;
-    const refreshKey = process.env.BB_OPEN_TMS_AUTH_REFRESH_KEY;
+    const secretKey = process.env.BB_OPEN_TMS_SECRET_KEY;
+    const refreshKey = process.env.BB_OPEN_TMS_REFRESH_KEY;
+    console.log("secrete key ", secretKey);
+    console.log("refreshKey key ", refreshKey);
+
     const userResponse = {
       token: jwt.sign(tokenGenerate, secretKey, {
-        expiresIn: process.env.BB_OPEN_TMS_AUTH_ACCESS_TOKEN_EXPIRY,
+        expiresIn: process.env.BB_OPEN_TMS_ACCESS_TOKEN_EXPIRY,
       }),
       refreshToken: jwt.sign(tokenGenerate, refreshKey, {
-        expiresIn: process.env.BB_OPEN_TMS_AUTH_REFRESH_TOKEN_EXPIRY,
+        expiresIn: process.env.BB_OPEN_TMS_REFRESH_TOKEN_EXPIRY,
       }),
       refreshExpiry: parseInt(
-        process.env.BB_OPEN_TMS_AUTH_REFRESH_TOKEN_EXPIRY.slice(0, -1),
+        process.env.BB_OPEN_TMS_REFRESH_TOKEN_EXPIRY.slice(0, -1),
         10
       ),
     };
-    console.log('\nsecretKey : ', secretKey)
-    console.log('\ntoken : ', userResponse.token)
+    console.log("\nsecretKey : ", secretKey);
+    console.log("\ntoken : ", userResponse.token);
 
     sendResponse(res, 200, { data: userResponse, message: "Success" });
   } catch (e) {

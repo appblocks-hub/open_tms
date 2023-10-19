@@ -29,11 +29,12 @@ This will set up the database in your local machine with seed data.
 
 ## Contributing Process
 
-1. Identify an issue you want to work on and check [here](https://github.com/appblocks-hub/challenges) to see if the issue is still unassigned
-2. Ask in the issue comment for getting the task assigned to you
+1. Identify an issue you want to work on and check [here](https://github.com/appblocks-hub/challenges) 
+2. Just let us know that you are working on the issue, See the already raised PRs as well. We will be evaluating all PRs and swags will be given to those who raise the best PRs first, before 29th of October.
 3. Check the issue you are working on and refer to the issue description to understand the intended workflow.
 4. Understand the database schema and function block requirements.
-5. Using shared block inside function blocks.
+5. Use of proper documentations and writing test cases(please refer our docs for running test cases with Jest) will give you more chances.
+6. Using shared block inside function blocks.
 
 Shared blocks are global blocks that can be utilized across all other function blocks. Functions exported from shared blocks can be accessed in any function block using `@appblocks/node-sdk`. Below is a code snippet illustrating this:
 
@@ -75,6 +76,8 @@ Format to pass middlewares in package block.config.json
         ],
       }
 ```
+Specific middlewares for blocks can be whitelisted by passing the block_name in the whitelist array in the middleware source code.
+
 The order of middleware execution follows the order in which they are defined in the array. For package-level middlewares (at the start of the package), they will be executed before the middlewares defined in the block's configuration.
 
 7. Complete the task and perform a git push.
