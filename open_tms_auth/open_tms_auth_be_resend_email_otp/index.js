@@ -21,13 +21,13 @@ env.init()
  *               email:
  *                 type: string
  *                 description: The user's email
- *                 example: testuser5@mailinator.com
+ *                 example: memberUser4@mailinator.com
  *     responses:
  *       '201':
  *         description: Created
  *       '200':
  *         description: Ok
-*/
+ */
 const handler = async ({ req, res }) => {
   const { sendResponse, isEmpty, prisma, validateRequestMethod, generateRandomString, sendMail, redis, checkHealth } =
     await shared.getShared()
