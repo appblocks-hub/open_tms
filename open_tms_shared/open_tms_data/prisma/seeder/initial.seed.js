@@ -368,7 +368,7 @@ async function createMemberUsers(prisma) {
       password_hash: mR4Password,
       password_salt: salt,
       provider: 'password',
-      email: 'appblocksadmin@mailinator.com',
+      email: 'memberUser4@mailinator.com',
       is_email_verified: true,
     },
   })
