@@ -368,11 +368,7 @@ async function createMemberUsers(prisma) {
       password_hash: mR4Password,
       password_salt: salt,
       provider: 'password',
-<<<<<<< HEAD
-      email: 'memberUser4@mailinator.com',
-=======
       email: 'appblocksadmin@mailinator.com',
->>>>>>> 8713158 (default email for swagger changed to appblocksadmin@mailinator.com)
       is_email_verified: true,
     },
   })
