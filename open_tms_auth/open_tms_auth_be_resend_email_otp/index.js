@@ -21,7 +21,7 @@ env.init()
  *               email:
  *                 type: string
  *                 description: The user's email
- *                 example: memberUser4@mailinator.com
+ *                 example: appblocksadmin@mailinator.com
  *     responses:
  *       '201':
  *         description: Created
