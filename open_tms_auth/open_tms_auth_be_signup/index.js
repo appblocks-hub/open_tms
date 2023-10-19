@@ -30,10 +30,14 @@ import validateSignupInput from './validation.js'
  *                 type: string
  *                 description: The user's email
 <<<<<<< HEAD
+<<<<<<< HEAD
  *                 example: appblocksadmin@mailinator.com
 =======
  *                 example: memberUser4@mailinator.com
 >>>>>>> 5825ae6 (default swagger email changed)
+=======
+ *                 example: appblocksadmin@mailinator.com
+>>>>>>> 8713158 (default email for swagger changed to appblocksadmin@mailinator.com)
  *               password:
  *                 type: string
  *                 description: The user's password

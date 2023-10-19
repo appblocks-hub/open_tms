@@ -18,7 +18,7 @@ import jwt from "jsonwebtoken";
  *               email:
  *                 type: string
  *                 description: The user's email
- *                 example: memberUser4@mailinator.com
+ *                 example: appblocksadmin@mailinator.com
  *               password:
  *                 type: string
  *                 description: The user's password
