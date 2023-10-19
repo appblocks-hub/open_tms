@@ -396,7 +396,7 @@ async function inviteMemberUsersToOrganisation(prisma) {
     create: {
       id: orgMemberUser1ID,
       role_id: memberRoleID,
-      user_id: organisationUserID,
+      user_id: memberUser1ID,
     },
   })
 
@@ -421,7 +421,7 @@ async function inviteMemberUsersToOrganisation(prisma) {
     create: {
       id: orgMemberUser2ID,
       role_id: memberRoleID,
-      user_id: organisationUserID,
+      user_id: memberUser2ID,
     },
   })
 
@@ -446,7 +446,7 @@ async function inviteMemberUsersToOrganisation(prisma) {
     create: {
       id: orgMemberUser3ID,
       role_id: memberRoleID,
-      user_id: organisationUserID,
+      user_id: memberUser3ID,
     },
   })
 
@@ -471,7 +471,7 @@ async function inviteMemberUsersToOrganisation(prisma) {
     create: {
       id: orgMemberUser4ID,
       role_id: memberRoleID,
-      user_id: organisationUserID,
+      user_id: memberUser4ID,
     },
   })
 }
