@@ -16,7 +16,7 @@ const handler = async (event) => {
     sendMail,
     generateRandomString,
   } = await shared.getShared();
-  
+
   try {
     // health check
     if (checkHealth(req, res)) return;
@@ -49,7 +49,7 @@ const handler = async (event) => {
 
     // Store the otp with an expiry stored in env.function in seconds
     await redis.set(`${user_account.id}_otp`, otp, {
-      EX: Number(process.env.BB_OPEN_TMS_AUTH_OTP_EXPIRY_TIME_IN_SECONDS),
+      EX: Number(process.env.BB_OPEN_TMS_OTP_EXPIRY_TIME_IN_SECONDS),
     });
 
     const emailTemplate = hbs.compile(otpTemp);
@@ -65,7 +65,7 @@ const handler = async (event) => {
       subject: "verify otp",
       text: "Please verify your otp",
       html: emailTemplate({
-        logo: process.env.BB_OPEN_TMS_AUTH_LOGO_URL,
+        logo: process.env.BB_OPEN_TMS_LOGO_URL,
         user: user.first_name,
         otp,
       }),
@@ -79,8 +79,8 @@ const handler = async (event) => {
   } catch (e) {
     console.log(e.message);
     return sendResponse(res, e.errorCode ? e.errorCode : 500, {
-      message: e.errorCode < 500 ? e.message : 'something went wrong',
-    })
+      message: e.errorCode < 500 ? e.message : "something went wrong",
+    });
   }
 };
 
