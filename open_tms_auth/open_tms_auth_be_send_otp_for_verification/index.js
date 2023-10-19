@@ -19,7 +19,11 @@ import otpTemp from "./templates/otp-email-temp.js";
  *               email:
  *                 type: string
  *                 description: The user's  email
+<<<<<<< HEAD
  *                 example: appblocksadmin@mailinator.com
+=======
+ *                 example: memberUser4@mailinator.com
+>>>>>>> 5825ae6 (default swagger email changed)
  *     responses:
  *       '201':
  *         description: Created
