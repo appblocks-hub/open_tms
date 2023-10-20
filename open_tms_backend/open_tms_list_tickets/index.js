@@ -39,6 +39,7 @@ const handler = async (event) => {
     }
 
     // Use user_id as assignee from the currently signed in user via the auth middleware
+    const user_id = req?.user.id
     const tickets = await prisma.$queryRaw`
       SELECT t.id AS ticket_id, tr.*
       FROM ticket t
@@ -48,8 +49,10 @@ const handler = async (event) => {
         INNER JOIN ticket_activity ta ON tr.id = ta.ticket_revision_id
         INNER JOIN org_member_roles org_m ON org_m.id = ta.assignee_id
         WHERE tr.ticket_id = t.id
+        AND org_m.user_id = ${user_id}
         ORDER BY tr.created_at DESC
-      ) tr ON TRUE;`
+      ) tr ON TRUE;
+`
 
     return sendResponse(res, 200, tickets, { message: "Retrieved tickets successfully" });
 
