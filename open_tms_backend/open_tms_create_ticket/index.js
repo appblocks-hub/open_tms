@@ -1,5 +1,57 @@
 import { shared } from '@appblocks/node-sdk'
 
+/**
+ * 
+* @swagger * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http *       scheme: bearer
+ *       bearerFormat: JWT *
+ * @swagger * paths:
+ *   /open_tms_backend/open_tms_create_tickets:
+ *     post:
+ *       security:
+ *         - bearerAuth: []
+ *       summary: Create a new ticket.
+ *       description: Create a new ticket in the system.
+ *       requestBody:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                 department:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *                 ticket_type:
+ *                   type: string
+ *       responses:
+ *         '201':
+ *           description: Created 
+ *           content:
+ *             application/json:
+ *               example: { message: 'Ticket created successfully' }
+ *         '400':
+ *           description: Bad Request
+ *           content:
+ *             application/json:
+ *               example: { message: 'Bad Request, one or more required values missing' }
+ *         '401':
+ *           description: Unauthorized 
+ *           content:
+ *             application/json:
+ *               example: { message: 'Unauthorized!' }
+ *         '500':
+ *           description: Internal Server Error 
+ *           content:
+ *             application/json:
+ *               example: { message: 'Whoops!, an error occurred while processing the request' }
+ */
+
+
 const allRequiredSet = (scope, ...properties) =>
   scope && (!properties || properties.every(key => !key || key in scope))
 
@@ -32,25 +84,22 @@ async function getOrganizationId(userID) {
   }
 }
 
-// const handler = async (event) => {
-const handler = async (req) => {
+const handler = async (event) => {
   const { sendResponse, prisma } = await shared.getShared()
 
-  // const { req, res } = event
+  const { req, res } = event
 
   try {
 
     // Perform Health check
-    // if (req.params.health === 'health') {
-    //   console.log('Health check success')
-    //   // sendResponse(res, 400, { message: 'Health check success' })
-    // }
+    if (req.params.health === 'health') {
+      sendResponse(res, 400, { message: 'Health check success' })
+    }
 
     // User context from authentication middleware
     const creator_id = req?.user?.id
     if (!creator_id) {
-      console.log("Unauthorized!")
-      // return sendResponse(res, 401, { message: "Unauthorized!" })
+      return sendResponse(res, 401, { message: "Unauthorized!" })
     }
     const organisation_id = getOrganizationId(creator_id)
 
@@ -68,76 +117,54 @@ const handler = async (req) => {
         });
 
         // Add descrption metadata for ticket
-        // await prisma.org_member.create({
-        //   data: {
-        //     name: req.body.name,
-        //     type: parseInt(req.body.ticket_type),
-        //     created_by: creator_id,
-        //     organisation_id: organisation_id,
-        //   }
-        // })
+        await prisma.org_member.create({
+          data: {
+            name: req.body.name,
+            type: parseInt(req.body.ticket_type),
+            created_by: creator_id,
+            organisation_id: organisation_id,
+          }
+        })
 
-        // // Create a ticket revision for the ticket
-        // await prisma.ticket_revision.create({
-        //   data: {
-        //     department: req.body.department,
-        //     ticket_id: ticket.id,
-        //     description: req.body.description,
-        //     created_by: creator_id,
-        //     title: req.body.name,
-        //   },
-        // });
+        // Create a ticket revision for the ticket
+        await prisma.ticket_revision.create({
+          data: {
+            department: req.body.department,
+            ticket_id: ticket.id,
+            description: req.body.description,
+            created_by: creator_id,
+            title: req.body.name,
+          },
+        });
 
-        // // Create a log entry in the ticket_activity table
-        // const stageName = 'ticket_raised'; // Name of the stage
-        // const currentStageId = await getStageIdByName(stageName);
-        // await prisma.ticket_activity.create({
-        //   data: {
-        //     ticket_revision_id: ticket.id,
-        //     remark: req.body.description,
-        //     created_by: creator_id,
-        //     current_stage: currentStageId,
-        //   },
-        // });
+        // Create a log entry in the ticket_activity table
+        const stageName = 'ticket_raised'; // Name of the stage
+        const currentStageId = await getStageIdByName(stageName);
+        await prisma.ticket_activity.create({
+          data: {
+            ticket_revision_id: ticket.id,
+            remark: req.body.description,
+            created_by: creator_id,
+            current_stage: currentStageId,
+          },
+        });
 
         const response = {
           id: ticket.id,
         }
-        // return sendResponse(res, 201, response, { message: 'Ticket created successfully' })
-        return console.log('Ticket created successfully')
+        return sendResponse(res, 201, response, { message: 'Ticket created successfully' })
       })
 
     }
-    // return sendResponse(res, 400, { message: 'Bad Request, one or more required values missing ' })
-    console.log('Bad Request, one or more required values missing ')
+    return sendResponse(res, 400, { message: 'Bad Request, one or more required values missing ' })
 
 
   } catch (err) {
     console.error("Error encountered!: ", err);
-    // return sendResponse(res, err.errorCode, {
-    //   message: " Whoops!, an error occurred while processing the request",
-    // });
-    console.log("Whoops!, an error occurred while processing the request")
+    return sendResponse(res, err.errorCode, {
+      message: " Whoops!, an error occurred while processing the request",
+    });
   }
 }
-
-
-const req = {
-  body: {
-    "name": "Scree",
-    "department": "Fontend",
-    "description": "Testing 1, 2",
-    "ticket_type": "0"
-  }
-}
-async function main() {
-  // This transfer is successful
-  await handler(req)
-  // This transfer fails because Alice doesn't have enough funds in her account
-  await handler(req)
-}
-
-main()
-
 
 export default handler
