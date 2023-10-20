@@ -1,6 +1,39 @@
 import { shared } from '@appblocks/node-sdk'
 import { v4 as uuidv4 } from 'uuid'
 
+/**
+ * @swagger
+ * /open_tms_backend/open_tms_add_user_to_organisation:
+ *   post:
+ *     summary: Add a user to an organisation
+ *     description: Add a user to an organisation as well as to create a user role for the given user under the organisation
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_id:
+ *                 type: string
+ *                 description: The users ID
+ *                 example: 3ac14aca-0e57-4506-90fe-6b476d81117a
+ *               organisation_id:
+ *                 type: string
+ *                 description: The Organisation's ID
+ *                 example: 090c4951-217d-4513-b016-49ed085d24d1
+ *               role_id:
+ *                 type: string
+ *                 description: The Role's ID
+ *                 example: 82f68fb9-c53a-4a05-a94a-2213a7ac72c2
+ *     responses:
+ *        '201':
+ *          description: Created
+ *        '200':
+ *          description: Ok
+ *
+ */
+
 const handler = async (event) => {
   const { req, res } = event
   const { sendResponse, validateRequestMethod, isEmpty, checkHealth, validateRequiredParams, prisma } =
@@ -58,11 +91,10 @@ const handler = async (event) => {
       })
     }
 
-
     // Checking if the user already present in the organisation with same role
     const userExistsInOrgMember = await prisma.org_member.findFirst({
       where: {
-        type: 1, 
+        type: 1,
         org_member_roles_fk: {
           some: {
             user_id: requestBody.user_id, // Check for the user_id
@@ -79,10 +111,10 @@ const handler = async (event) => {
         message: 'User Already present in the organisation',
       })
     }
- 
+
     await prisma.$transaction(async (tx) => {
       const uniqueOrgMemberId = uuidv4()
-      
+
       const newOrgMember = await tx.org_member.create({
         data: {
           created_by: req?.user?.id,

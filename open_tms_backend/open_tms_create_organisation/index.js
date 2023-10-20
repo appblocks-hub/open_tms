@@ -1,13 +1,40 @@
 import { shared } from '@appblocks/node-sdk'
 import { v4 as uuidv4 } from 'uuid'
 
+/**
+ * @swagger
+ * /open_tms_backend/open_tms_create_organisation:
+ *   post:
+ *     summary: Create an Organisation
+ *     description: Create an Organisation
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Organisation's Name
+ *                 example: Neoito
+ *               display_name:
+ *                 type: string
+ *                 description:  Organisation's Display Name
+ *                 example: Neoito
+ *     responses:
+ *        '201':
+ *          description: Created
+ *        '200':
+ *          description: Ok
+ *
+ */
+
 const handler = async (event) => {
   const { req, res } = event
   const { sendResponse, validateRequestMethod, isEmpty, checkHealth, validateRequiredParams, prisma } =
     await shared.getShared()
   const requiredParams = ['name', 'display_name']
-
-  const tenant_id = '71df8bec-075a-48a0-9ea7-6d5f85de729c'
 
   try {
     // health check
@@ -33,11 +60,40 @@ const handler = async (event) => {
       })
     }
 
+    const existingOrganisation = await prisma.organisation.findFirst({
+      where: {
+        OR: [
+          {
+            name: requestBody?.name,
+          },
+          {
+            display_name: requestBody?.display_name,
+          },
+        ],
+      },
+    })
+
+    if (existingOrganisation) {
+      // The Orgnisation with the same name or display_name already exists in the database.
+      return sendResponse(res, 400, {
+        message: 'Orgnisation with the same name or display_name already exists.',
+      })
+    }
+
     const uniqueId = uuidv4()
+
+    const tenant = await prisma.tenant.findFirst({
+      where: {
+        name: 'Appblocks',
+      },
+      select: {
+        id: true,
+      },
+    })
 
     const newDataAdded = await prisma.organisation.create({
       data: {
-        tenant_id,
+        tenant_id: tenant?.id,
         created_by: req?.user?.id,
         id: uniqueId,
         updated_at: new Date(),

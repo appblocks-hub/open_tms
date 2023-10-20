@@ -1,5 +1,34 @@
 import { shared } from '@appblocks/node-sdk'
 
+/**
+ * @swagger
+ * /open_tms_backend/open_tms_create_department:
+ *   post:
+ *     summary: Create an Department
+ *     description: Create an Department
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Department's Name
+ *                 example: AppBlocks
+ *               display_name:
+ *                 type: string
+ *                 description:  Department's Display Name
+ *                 example: AppBlocks
+ *     responses:
+ *        '201':
+ *          description: Created
+ *        '200':
+ *          description: Ok
+ *
+ */
+
 const handler = async (event) => {
   const { req, res } = event
   const { sendResponse, validateRequestMethod, isEmpty, checkHealth, validateRequiredParams, prisma } =
