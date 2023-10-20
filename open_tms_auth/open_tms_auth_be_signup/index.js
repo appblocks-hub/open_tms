@@ -29,7 +29,7 @@ import validateSignupInput from './validation.js'
  *               email:
  *                 type: string
  *                 description: The user's email
- *                 example: testuser5@mailinator.com
+ *                 example: appblocksadmin@mailinator.com
  *               password:
  *                 type: string
  *                 description: The user's password
@@ -104,7 +104,9 @@ const handler = async ({ req, res }) => {
 
     const otp = generateRandomString()
     if (!redis.isOpen) await redis.connect()
-    await redis.set(`${user_account_id}_otp`, otp, { EX: 600 })
+    await redis.set(`${user_account_id}_otp`, otp, {
+      EX: Number(process.env.BB_OPEN_TMS_OTP_EXPIRY_TIME_IN_SECONDS),
+    })
     await redis.disconnect()
 
     const emailTemplate = hbs.compile(otpTemp)
@@ -118,7 +120,7 @@ const handler = async ({ req, res }) => {
       subject: 'verify otp',
       text: 'Please verify your otp',
       html: emailTemplate({
-        logo: process.env.LOGO_URL,
+        logo: process.env.BB_OPEN_TMS_LOGO_URL,
         user: user.first_name,
         otp,
       }),
