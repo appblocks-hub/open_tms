@@ -9,7 +9,7 @@ const authenticateUser = async (req) => {
 
   try {
     if (token == null) throw new Error()
-    const data = jwt.verify(token, process.env.BB_OPEN_AUTH_TMS_SECRET_KEY.toString())
+    const data = jwt.verify(token, process.env.BB_OPEN_TMS_SECRET_KEY.toString())
     return data
   } catch (e) {
     const error = new Error('An error occurred.')
