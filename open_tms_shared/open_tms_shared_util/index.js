@@ -46,6 +46,16 @@ const isEmpty = (value) => {
   return false
 }
 
+// A middleware function to validate the required parameters
+function validateRequiredParams(req, requiredParams) {
+  for (const param of requiredParams) {
+    if (!req[param]) {
+      return param
+    }
+  }
+  return false
+}
+
 export default {
   redis,
   sendResponse,
@@ -54,4 +64,5 @@ export default {
   HTTP_STATUS_CODES,
   sendMail,
   generateRandomString,
+  validateRequiredParams,
 }
