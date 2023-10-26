@@ -9,10 +9,15 @@ const handler = async (event) => {
     return sendResponse(res, 200, { message: 'Health check success' })
   }
 
-  /**
-   * Add update ticket logic here
-   */
+  // get the ticket ID to update
+  const ticketId = req.params.ticketId
 
+  // update the ticket in Appblocks
+  await shared.updateTicket({
+    id: ticketId,
+    status: 'closed',
+  })
+  
   return sendResponse(res, 200, { message: 'Updated ticket successfully' })
 }
 
