@@ -117,6 +117,9 @@ const t2Activity5ID = '99c5df8d-3b22-44ff-bee1-e4cb124e4515'
 const t2Activity6ID = '04a3cf74-98bb-454d-9d5a-d57d93224172'
 const t2Activity7ID = '8111c92b-405b-437b-8b32-9dfa012c285d'
 
+const sampleTicketTypeID1 = '81f9a658-9b1a-4cf5-ba94-460411ec9bb9'
+const sampleTicketTypeID2 = 'c1cbdd3d-4991-4782-8f30-a898d9517c55'
+
 async function createUser(prisma) {
   const tenant = await prisma.tenant.upsert({
     where: {
@@ -944,6 +947,7 @@ async function createTicket(prisma) {
       status: 0,
       organisation_id: organisationID,
       created_by: memberUser1ID,
+      ticket_type_id: sampleTicketTypeID1,
     },
   })
 
@@ -957,6 +961,7 @@ async function createTicket(prisma) {
       status: 0,
       organisation_id: organisationID,
       created_by: memberUser2ID,
+      ticket_type_id: sampleTicketTypeID2,
     },
   })
 
@@ -1207,6 +1212,33 @@ async function updateTicket(prisma) {
   })
 }
 
+async function createTicketType(prisma) {
+  const sampleTicketType1 = await prisma.ticket_types.upsert({
+    where: {
+      id: sampleTicketTypeID1,
+    },
+    update: {},
+    create: {
+      id: sampleTicketTypeID1,
+      label: 'Support',
+      organisation_id: organisationID,
+      created_by: memberUser1ID,
+    },
+  })
+  const sampleTicketType2 = await prisma.ticket_types.upsert({
+    where: {
+      id: sampleTicketTypeID2,
+    },
+    update: {},
+    create: {
+      id: sampleTicketTypeID2,
+      label: 'Internal',
+      organisation_id: organisationID,
+      created_by: memberUser1ID,
+    },
+  })
+}
+
 export {
   createUser,
   createPredefinedRoles,
@@ -1216,4 +1248,5 @@ export {
   createProcess,
   createTicket,
   updateTicket,
+  createTicketType
 }
