@@ -63,7 +63,7 @@ const handler = async (event) => {
         INNER JOIN public.org_member_roles ON org_member.id = org_member_roles.id
         INNER JOIN public.roles ON org_member_roles.role_id = roles.id
         WHERE org_member_roles.user_id = ${logged_in_user_id}
-        AND roles.name = 'member'
+        AND roles.name = 'role-assignee'
      `;
 
     if (!loggedInUser.length > 0) {
