@@ -1,3 +1,29 @@
+/**
+ * @swagger
+ * /open_tms_backend/open_tms_create_ticket:
+ *   post:
+ *     summary: To crate tickets
+ *     description: using this you can create tickets under a user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               department:
+ *                 type: string
+ *               ticket_type:
+ *                 type: Number
+ *     responses:
+ *        '200':
+ *          description: Ticket created successfully
+ */
+
 import { shared } from '@appblocks/node-sdk'
 
 const { prisma, validateRequestBody, validateRequestMethod } = await shared.getShared()
