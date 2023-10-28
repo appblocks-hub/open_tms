@@ -42,9 +42,10 @@ const ErrorResBuilder = (status, message, customMessage, code) => ({
 
 const commonErrors = (statusCode, customMessage) => {
   const errors = {
-    500: ErrorResBuilder(500, 'Something went wrong.', '', 'INTERNAL_ERROR'),
+    500: ErrorResBuilder(500, 'Something went wrong.', customMessage, 'INTERNAL_ERROR'),
     400: ErrorResBuilder(400, 'Bad Request', customMessage, 'BAD_REQUEST'),
     401: ErrorResBuilder(400, 'Unauthorized access', customMessage, 'AUTH_FAILED'),
+    404: ErrorResBuilder(400, 'Not Found', customMessage, 'NOT_FOUND'),
   }
   return errors[statusCode] || errors[500]
 }
@@ -60,8 +61,9 @@ const handler = async (event) => {
     res.status(statusCode).json(successResponseObject)
   }
 
-  res.errorResponse = (error = '', statusCode = 500) => {
-    const responseJson = commonErrors(statusCode, error)
+  res.errorResponse = (statusCode = 500, error = '') => {
+    const errorMessage = error.message ? error.message : error
+    const responseJson = commonErrors(statusCode, errorMessage)
     const env = process.env.BB_OPEN_TMS_ENVIRONMENT || 'development'
     if (env === 'development') console.error('Error :', error)
     return res.status(statusCode).json(responseJson)

@@ -46,6 +46,12 @@ const isEmpty = (value) => {
   return false
 }
 
+const validateRequestBody = (requiredFields, requestBody) => {
+  const missingFields = requiredFields.filter((field) => isEmpty(requestBody[field]))
+  if (missingFields.length > 0) return `Missing or invalid fields in request body: ${missingFields.join(', ')}`
+  return null
+}
+
 export default {
   redis,
   sendResponse,
@@ -54,4 +60,5 @@ export default {
   HTTP_STATUS_CODES,
   sendMail,
   generateRandomString,
+  validateRequestBody,
 }

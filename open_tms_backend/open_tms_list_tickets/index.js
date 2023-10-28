@@ -21,6 +21,9 @@ const handler = async (event) => {
       return res.successResponse(null, 'Health check success', 200)
     }
     const userID = req?.user?.id
+    if (!userID) {
+      return res.errorResponse(401)
+    }
     const tickets = await prisma.$queryRaw`
     WITH org_m AS (
       SELECT o.id
@@ -43,7 +46,7 @@ const handler = async (event) => {
     ) tr ON TRUE;`
     return res.successResponse(tickets, 'Retrieved tickets successfully', 200)
   } catch (error) {
-    return res.errorResponse(error)
+    return res.errorResponse(500, error)
   }
 }
 export default handler
