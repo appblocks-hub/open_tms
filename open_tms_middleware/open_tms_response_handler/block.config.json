@@ -1,0 +1,21 @@
+{
+  "blockId": "3in6Ry0Iq0B1sahrnYz55",
+  "name": "open_tms_response_handler",
+  "type": "function",
+  "source": {
+    "https": "https://github.com/appblocks-hub/open_tms.git",
+    "ssh": "git@github.com:appblocks-hub/open_tms.git",
+    "branch": "block_open_tms_response_handler"
+  },
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-",
+    "vjF7scrTsGTF9inP3cCR7"
+  ],
+  "repoType": "mono",
+  "language": "nodejs",
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
+  "isPublic": true,
+  "start": "node index.js"
+}
