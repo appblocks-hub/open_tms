@@ -1,0 +1,13 @@
+{
+	"appblockVersion": [
+		"1.0.0"
+	],
+	"gitTarget": "my git",
+	"gitVisibility": "PUBLIC",
+	"gitDescription": "",
+	"blockNamingStrategyFnBody": "let i = 0;if (original !== lastTried){ i = parseInt(lastTried.split('_').pop(), 10)};return `${original}_${i + 1}`",
+	"blockNamingStrategyFnArgs": [
+		"original",
+		"lastTried"
+	]
+}

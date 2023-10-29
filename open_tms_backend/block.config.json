@@ -14,7 +14,10 @@
   "middlewares": [
     {
       "executeOnBlocks": [],
-      "middlewaresList": ["open_tms_auth_middleware"]
+      "middlewaresList": [
+        "open_tms_auth_middleware",
+        "open_tms_response_handler"
+      ]
     }
   ],
   "dependencies": {
