@@ -45,22 +45,23 @@ import { shared } from '@appblocks/node-sdk'
  */
 
 const handler = async (event) => {
-  const { req, res } = event
-  const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth } = await shared.getShared();
-  const ticket_type_id = req.body.ticket_type_id;
-  const logged_in_user_id = req.user.id;
+  try {
+    const { req, res } = event
+    const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth } = await shared.getShared();
+    const ticket_type_id = req.body.ticket_type_id;
+    const logged_in_user_id = req.user.id;
 
-  if (checkHealth(req, res)) return;
+    if (checkHealth(req, res)) return;
 
-  await validateRequestMethod(req, ["POST"]);
+    await validateRequestMethod(req, ["POST"]);
 
-  if (isEmpty(ticket_type_id) || isEmpty(req.body.label)) {
-    return sendResponse(res, 400, {
-      message: "Please provide valid input",
-    });
-  }
+    if (isEmpty(ticket_type_id) || isEmpty(req.body.label)) {
+      return sendResponse(res, 400, {
+        message: "Please provide valid input",
+      });
+    }
 
-  const loggedInUser = await prisma.$queryRaw`
+    const loggedInUser = await prisma.$queryRaw`
   SELECT
     CASE
      WHEN EXISTS (
@@ -73,36 +74,41 @@ const handler = async (event) => {
       ELSE false
     END AS isAdmin;`;
 
-  const isAdmin = loggedInUser[0]?.isadmin || false;
-  if (!isAdmin) {
-    return sendResponse(res, 401, {
-      message: "Unauthorized access",
+    const isAdmin = loggedInUser[0]?.isadmin || false;
+    if (!isAdmin) {
+      return sendResponse(res, 401, {
+        message: "Unauthorized access",
+      });
+    }
+
+    const ticketType = await prisma.ticket_types.findFirst({
+      where: {
+        id: ticket_type_id,
+      },
+    });
+
+    if (!ticketType) {
+      return sendResponse(res, 400, {
+        message: "Ticket type id is invalid.",
+      });
+    }
+
+    await prisma.ticket_types.update({
+      where: {
+        id: ticket_type_id,
+      },
+      data: {
+        label: req.body.label,
+        updated_by: req.user.id
+      },
+    });
+
+    return sendResponse(res, 200, { message: 'Successfully updated ticket type' })
+  } catch (err) {
+    return sendResponse(res, 500, {
+      message: "Something went wrong.",
     });
   }
-
-  const ticketType = await prisma.ticket_types.findFirst({
-    where: {
-      id: ticket_type_id,
-    },
-  });
-
-  if (!ticketType) {
-    return sendResponse(res, 400, {
-      message: "Ticket type id is invalid.",
-    });
-  }
-
-  await prisma.ticket_types.update({
-    where: {
-      id: ticket_type_id,
-    },
-    data: {
-      label: req.body.label,
-      updated_by: req.user.id
-    },
-  });
-
-  return sendResponse(res, 200, { message: 'Successfully updated ticket type' })
 }
 
 export default handler
