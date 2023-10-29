@@ -28,7 +28,7 @@ import { shared } from '@appblocks/node-sdk'
  *               label:
  *                 type: string
  *                 description: Ticket type name
- *                 example: dsbcndjA28
+ *                 example: Support
  *     responses:
  *       '201':
  *         description: Deleted
@@ -87,14 +87,14 @@ const handler = async (event) => {
         message: "Ticket type already exists.",
       });
     }
-    const ticketData = {
+    const ticketTypeData = {
       organisation_id: loggedInUser[0].organisation_id,
       created_by: logged_in_user_id,
       label
     }
 
     await prisma.ticket_types.create({
-      data: ticketData,
+      data: ticketTypeData,
     });
 
     return sendResponse(res, 200, { message: 'Successfully created ticket type' })
