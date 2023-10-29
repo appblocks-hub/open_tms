@@ -144,9 +144,11 @@ describe('handler', () => {
         const event = {
             req: {
                 body: {
-                    name: 'Operations',
-                    display_name: 'People Operations',
-                    org_member_id: '2e6b588f-2cb8-4bb6-a0c8-414651ab9b62',
+                    ticket_type_id: '81f9a658-9b1a-4cf5-ba94-460411ec9bb9',
+                    label: 'New Label',
+                },
+                user: {
+                    id: 'adminUserId',
                 },
             },
             res: {},
