@@ -57,6 +57,22 @@ describe('handler', () => {
         });
     });
 
+    it('should return a 400 response when input is incorrect', async () => {
+        const event = {
+            req: {
+                body: {
+                    display_name: 'People Operations',
+                    org_member_id: '2e6b588f-2cb8-4bb6-a0c8-414651ab9b62',
+                },
+            },
+            res: {},
+        };
+
+        expect(sendResponse).toHaveBeenCalledWith({}, 400, {
+            message: 'Please provide valid input',
+        });
+    });
+
     it('should return a 400 response when department name is already taken', async () => {
         const event = {
             req: {
