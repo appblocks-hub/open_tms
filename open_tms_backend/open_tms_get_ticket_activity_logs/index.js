@@ -1,6 +1,7 @@
+import { shared } from '@appblocks/node-sdk'
 /**
  * @swagger
- * /open_tms_backend/open_tms_get_ticket_activity_logs
+ * /open_tms_backend/open_tms_get_ticket_activity_logs:
  *   get:
  *     summary: Get ticket activity
  *     description: Retrieve activity data for a specific ticket.
@@ -49,8 +50,6 @@
  *               message: "Health check succeeded"
  */
 
-import { shared } from '@appblocks/node-sdk'
-
 const regexExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi
 
 const handler = async (event) => {
@@ -63,6 +62,11 @@ const handler = async (event) => {
     if (req.params.health === 'health') return res.successResponse(null, 'Health check succeeded', 200)
 
     const requestBody = req.body
+
+    const userID = req?.user?.id
+    if (!userID) {
+      return res.errorResponse(401)
+    }
 
     // if we are going to use express validator then we can check isUUID for ticket id validation
     const requiredFields = ['ticket_id']

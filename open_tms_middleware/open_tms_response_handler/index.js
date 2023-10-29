@@ -87,8 +87,8 @@ const commonErrors = (statusCode, customMessage) => {
   const errors = {
     500: ErrorResBuilder(500, 'Something went wrong.', customMessage, 'INTERNAL_ERROR'),
     400: ErrorResBuilder(400, 'Bad Request', customMessage, 'BAD_REQUEST'),
-    401: ErrorResBuilder(400, 'Unauthorized access', customMessage, 'AUTH_FAILED'),
-    404: ErrorResBuilder(400, 'Not Found', customMessage, 'NOT_FOUND'),
+    401: ErrorResBuilder(401, 'Unauthorized access', customMessage, 'AUTH_FAILED'),
+    404: ErrorResBuilder(404, 'Not Found', customMessage, 'NOT_FOUND'),
     422: ErrorResBuilder(422, 'Invalid data provided', customMessage, 'INVALID_DATA_PROVIDED'),
   }
   return errors[statusCode] || errors[500]

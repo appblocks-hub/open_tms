@@ -1,3 +1,4 @@
+import { shared } from '@appblocks/node-sdk'
 /**
  * @swagger
  * /open_tms_backend/open_tms_list_tickets:
@@ -17,11 +18,6 @@
  *                 - id: "828cb639-9592-40f9-ad8d-90b27570ff47"
  *                   name: "Sample Ticket"
  *                   description: "Sample Ticket Description"
- *                   ...
- *                 - id: "2fe8b510-eb5f-4a03-8473-29a99b012e2a"
- *                   name: "Another Ticket"
- *                   description: "Another Ticket Description"
- *                   ...
  *       '401':
  *         description: Unauthorized Access with an error response.
  *         content:
@@ -45,8 +41,6 @@
  *                 - code: "INTERNAL_ERROR"
  *                   message: "Something went wrong."
  */
-
-import { shared } from '@appblocks/node-sdk'
 
 const handler = async (event) => {
   const { req, res } = event

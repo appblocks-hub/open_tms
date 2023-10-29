@@ -1,6 +1,7 @@
+import { shared } from '@appblocks/node-sdk'
 /**
  * @swagger
- * /open_tms_backend/open_tms_create_ticket
+ * /open_tms_backend/open_tms_create_ticket:
  *   post:
  *     summary: Create a Ticket
  *     description: Create a new ticket with the specified details.
@@ -86,8 +87,6 @@
  *                 - code: "INTERNAL_ERROR"
  *                   message: "Something went wrong."
  */
-
-import { shared } from '@appblocks/node-sdk'
 
 const { prisma, validateRequestBody, validateRequestMethod } = await shared.getShared()
 
