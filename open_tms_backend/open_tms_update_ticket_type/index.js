@@ -28,11 +28,11 @@ import { shared } from '@appblocks/node-sdk'
  *               ticket_type_id:
  *                 type: string
  *                 description: The type id
- *                 example: dsbcndjA28
+ *                 example: 81f9a658-9b1a-4cf5-ba94-460411ec9bb9
  *               label:
  *                 type: string
  *                 description: Ticket type name
- *                 example: dsbcndjA28
+ *                 example: Support
  *     responses:
  *       '201':
  *         description: Deleted
