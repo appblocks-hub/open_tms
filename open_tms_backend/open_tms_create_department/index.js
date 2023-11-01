@@ -33,10 +33,6 @@ import { shared } from '@appblocks/node-sdk';
  *                 type: string
  *                 description: Department type display name
  *                 example: People Operations
- *               org_member_id:
- *                 type: string
- *                 description: Organization member id which need to be associated with this department
- *                 example: 2e6b588f-2cb8-4bb6-a0c8-414651ab9b62
  *     responses:
  *       '201':
  *         description: Deleted
@@ -54,58 +50,71 @@ const handler = async (event) => {
     const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth } = await shared.getShared();
     const name = req.body.name;
     const display_name = req.body.display_name;
-    const org_member_id = req.body.org_member_id;
+    const logged_in_user_id = req.user.id;
 
     if (checkHealth(req, res)) return;
 
     await validateRequestMethod(req, ["POST"]);
 
-    if (isEmpty(req.body.name) || isEmpty(req.body.display_name) || isEmpty(req.body.org_member_id)) {
+    const loggedInUser = await prisma.$queryRaw`
+    SELECT org_member.organisation_id
+    FROM public.org_member
+    INNER JOIN public.org_member_roles ON org_member.id = org_member_roles.id
+    INNER JOIN public.roles ON org_member_roles.role_id = roles.id
+    WHERE org_member_roles.user_id = ${logged_in_user_id}
+    AND roles.name = 'role-assignee'`;
+
+    if (!loggedInUser.length > 0) {
+      return sendResponse(res, 401, {
+        message: "Unauthorized access",
+      });
+    }
+
+    if (isEmpty(req.body.name) || isEmpty(req.body.display_name)) {
       return sendResponse(res, 400, {
         message: "Please provide valid input",
       });
     }
 
-    const [existingDepartment, existingDepartmentOfOrgMember] = await Promise.all([
-      prisma.department.findFirst({
-        where: {
-          OR: [
-            {
-              name: {
-                contains: name.replace(/\s/g, ''),
-                mode: 'insensitive',
-              },
+    const existingDepartment = await prisma.department.findFirst({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: name.replace(/\s/g, ''),
+              mode: 'insensitive',
             },
-            {
-              display_name: {
-                contains: display_name.replace(/\s/g, ''),
-                mode: 'insensitive',
-              },
+          },
+          {
+            display_name: {
+              contains: display_name.replace(/\s/g, ''),
+              mode: 'insensitive',
             },
-          ],
-        }
-      }), prisma.department.findFirst({
-        where: {
-          id: org_member_id
-        }
-      })
-    ]);
+          },
+        ],
+      }
+    })
 
     if (existingDepartment) {
       return sendResponse(res, 400, {
         message: "Department with similar name already exists.",
       });
     }
-    if (existingDepartmentOfOrgMember) {
-      return sendResponse(res, 400, {
-        message: "Organization member is already associated with another department.",
-      });
+
+    const orgMemberData = {
+      created_by: logged_in_user_id,
+      organisation_id: loggedInUser[0].organisation_id,
+      type: 2
     }
+
+    const orgMember = await prisma.org_member.create({
+      data: orgMemberData,
+    });
 
     const departmentData = {
       name,
       display_name,
-      id: org_member_id
+      id: orgMember.id
     }
 
     await prisma.department.create({
