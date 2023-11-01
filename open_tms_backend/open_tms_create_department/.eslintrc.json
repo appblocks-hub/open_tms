@@ -1,4 +1,3 @@
-
 {
     "env": {
         "node": true
@@ -7,7 +6,11 @@
         "ecmaVersion": "latest"
     },
     "ignorePatterns": [],
-    "extends": ["airbnb-base", "prettier"],
+    "extends": [
+        "airbnb-base",
+        "prettier",
+        "plugin:jest/recommended"
+    ],
     "rules": {
         "no-underscore-dangle": "off",
         "no-console": "off",
@@ -17,8 +20,8 @@
         "no-use-before-define": [
             "error",
             {
-          "functions": false
-           }
+                "functions": false
+            }
         ]
     }
 }
