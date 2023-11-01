@@ -45,6 +45,7 @@ const handler = async (event) => {
     const { req, res } = event
     const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth } = await shared.getShared();
     const ticket_type_id = req.body.ticket_type_id;
+    const logged_in_user_id = req.user.id;
 
     if (checkHealth(req, res)) return;
 
@@ -65,6 +66,26 @@ const handler = async (event) => {
     if (!ticketType) {
       return sendResponse(res, 400, {
         message: "Ticket type id is invalid.",
+      });
+    }
+
+    const loggedInUser = await prisma.$queryRaw`
+  SELECT
+    CASE
+     WHEN EXISTS (
+        SELECT 1
+        FROM public.org_member_roles
+        INNER JOIN public.roles ON org_member_roles.role_id = roles.id
+        WHERE org_member_roles.user_id = ${logged_in_user_id}
+        AND roles.name = 'role-assignee'
+      ) THEN true
+      ELSE false
+    END AS isAdmin;`;
+
+    const isAdmin = loggedInUser[0]?.isadmin || false;
+    if (!isAdmin) {
+      return sendResponse(res, 401, {
+        message: "Unauthorized access",
       });
     }
 
