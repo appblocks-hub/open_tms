@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { createUser, createPredefinedRoles, createMemberUsers,inviteMemberUsersToOrganisation,createDepartmentsAndAddUsers,createProcess,createTicket,updateTicket} from './seeder/initial.seed.js'
+import { createUser, createPredefinedRoles, createMemberUsers, inviteMemberUsersToOrganisation, createDepartmentsAndAddUsers, createProcess, createTicket, updateTicket, createTicketType } from './seeder/initial.seed.js'
 
 const prisma = new PrismaClient()
 
@@ -9,7 +9,7 @@ async function main() {
   await createMemberUsers(prisma)
   await inviteMemberUsersToOrganisation(prisma)
   await createDepartmentsAndAddUsers(prisma)
-
+  await createTicketType(prisma)
   await createProcess(prisma)
   await createTicket(prisma)
   await updateTicket(prisma)
