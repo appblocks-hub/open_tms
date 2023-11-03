@@ -34,6 +34,17 @@ import { shared } from '@appblocks/node-sdk'
  *               errors:
  *                 - code: BAD_REQUEST
  *                   message: Please provide a valid department id
+ *       401:
+ *         description: User have no role to perform the operation.
+ *         content:
+ *           application/json:
+ *             example:
+ *               meta:
+ *                 status: 400
+ *                 message: Unauthorized
+ *               errors:
+ *                 - code: UNAUTHORIZED
+ *                   message: Sorry, you do not have the necessary permissions to perform this operation
  *       404:
  *         description: Bad Request. Record to delete does not exist.
  *         content:
@@ -45,17 +56,6 @@ import { shared } from '@appblocks/node-sdk'
  *               errors:
  *                 - code: RESOURCE_NOT_FOUND
  *                   message: Record to delete does not exist.
- *       422:
- *         description: Department has members.
- *         content:
- *           application/json:
- *             example:
- *               meta:
- *                 status: 422
- *                 message:Unprocessable Entity
- *               errors:
- *                 - code: DEPARTMENT_HAS_MEMBERS
- *                   message: The department cannot be deleted as it contains active members.
  *       500:
  *         description: Internal Server Error. Something went wrong.
  *         content:
@@ -72,6 +72,7 @@ const handler = async (event) => {
   const { req, res } = event
   const { sendResponse, prisma, validateRequestMethod, HTTP_STATUS_CODES } = await shared.getShared()
 
+  const ROLE_ASSIGNEE = 'role-assignee'
   // health check
   if (req.params.health === 'health') {
     return sendResponse(res, 200, { message: 'Health check success' })
@@ -100,35 +101,44 @@ const handler = async (event) => {
   const { id } = req.query
 
   try {
-    // check if the department has any users associated with it
-    const departmentUsers = await prisma.department_users.findFirst({
+    // check if the user have required roles
+    const userRole = await prisma.org_member_roles.findFirst({
       where: {
-        department_id: id,
+        user_id: req.user?.id,
       },
-      select: {
-        id: true,
+      include: {
+        org_member_roles_role_fk: {
+          select: {
+            name: true,
+          },
+        },
       },
     })
 
-    // if it has users throw error
-    if (departmentUsers?.id) {
-      return sendResponse(res, 422, {
+    if (userRole.org_member_roles_role_fk?.name !== ROLE_ASSIGNEE) {
+      return sendResponse(res, 401, {
         meta: {
-          status: 422,
-          message: HTTP_STATUS_CODES[422],
+          status: 401,
+          message: HTTP_STATUS_CODES[401],
         },
         errors: [
           {
-            code: 'DEPARTMENT_HAS_MEMBERS',
-            message:
-              'The department cannot be deleted as it contains active members. Please remove the members or reassign them before deletion.',
+            code: 'UNAUTHORIZED',
+            message: 'Sorry, you do not have the necessary permissions to perform this operation',
           },
         ],
       })
     }
 
-    // else start the transaction
+    // start the transaction
     await prisma.$transaction(async (transactionPrisma) => {
+      // delete department users
+      await transactionPrisma.department_users.deleteMany({
+        where: {
+          department_id: id,
+        },
+      })
+
       // find org_member records associated with the department
       const orgMembers = await transactionPrisma.org_member.findMany({
         where: {
