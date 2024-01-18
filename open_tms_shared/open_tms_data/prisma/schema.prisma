@@ -311,7 +311,6 @@ model ticket_types {
   created_at      DateTime? @default(now())
   updated_at      DateTime? @updatedAt
   organisation_id String
-
   ticket_type_organisation_id       organisation?     @relation("ticket_type_organisation_id", fields: [organisation_id], references: [id])
   ticket_type_created_by            user?             @relation("ticket_type_created_by", fields: [created_by], references: [id])
   ticket_type_updated_by            user?             @relation("ticket_type_updated_by", fields: [updated_by], references: [id])

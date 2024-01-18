@@ -7,14 +7,20 @@
     "ssh": "git@github.com:appblocks-hub/open_tms.git",
     "branch": "block_open_tms_backend"
   },
-  "parentBlockIDs": ["cjFjUTS-eRkzpj10RRol-"],
+  "parentBlockIDs": [
+    "cjFjUTS-eRkzpj10RRol-"
+  ],
   "repoType": "mono",
-  "supportedAppblockVersions": ["1.0.0"],
+  "supportedAppblockVersions": [
+    "1.0.0"
+  ],
   "isPublic": true,
   "middlewares": [
     {
       "executeOnBlocks": [],
-      "middlewaresList": ["open_tms_auth_middleware"]
+      "middlewaresList": [
+        "open_tms_auth_middleware"
+      ]
     }
   ],
   "dependencies": {
@@ -50,6 +56,11 @@
     },
     "open_tms_get_ticket_activity_logs": {
       "directory": "open_tms_get_ticket_activity_logs"
-    }
+    },
+    "open_tms_remove_org_user": {
+      "directory": "open_tms_remove_org_user"},
+    "open_tms_add_user_to_organisation": {
+      "directory": "open_tms_add_user_to_organisation"
+}
   }
 }
