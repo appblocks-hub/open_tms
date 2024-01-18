@@ -37,6 +37,7 @@ model organisation {
   organisation_updated_by user?     @relation("organisation_updated_by", fields: [updated_by], references: [id])
   organisation_ticket_fk  ticket[]  @relation("ticket_organisation_id")
   organisation_process_fk process[] @relation("process__organisation_id")
+  organisation_ticket_type_fk  ticket_types[]  @relation("ticket_type_organisation_id")
 }
 
 model user {
@@ -71,6 +72,8 @@ model user {
   ticket_revision_updated_by_fk             ticket_revision[]             @relation("ticket_revision_updated_by")
   ticket_activity_created_by_fk             ticket_activity[]             @relation("ticket_activity_created_by")
   ticket_activity_updated_by_fk             ticket_activity[]             @relation("ticket_activity_updated_by")
+  ticket_type_created_by_fk                 ticket_types[]                @relation("ticket_type_created_by")
+  ticket_type_updated_by_fk                 ticket_types[]                @relation("ticket_type_updated_by")
 
   org_member_roles org_member_roles[] @relation("org_member_roles_user")
   user_accounts user_account[] @relation("user_account_user_id")
@@ -254,11 +257,13 @@ model ticket {
   created_at      DateTime? @default(now())
   updated_at      DateTime? @updatedAt
   organisation_id String
+  ticket_type_id  String
 
   ticket_organisation_id       organisation?     @relation("ticket_organisation_id", fields: [organisation_id], references: [id])
   ticket_created_by            user?             @relation("ticket_created_by", fields: [created_by], references: [id])
   ticket_updated_by            user?             @relation("ticket_updated_by", fields: [updated_by], references: [id])
   ticket_revision_ticket_id_fk ticket_revision[] @relation("ticket_revision_ticket_id")
+  ticket_type_id_fk            ticket_types?     @relation("ticket_type_id_fk",fields: [ticket_type_id], references: [id])
 }
 
 model ticket_revision {
@@ -295,4 +300,19 @@ model ticket_activity {
   ticket_activity_assignee_id        org_member?     @relation("ticket_activity_assignee_id", fields: [assignee_id], references: [id])
   ticket_activity_current_stage      stage           @relation("ticket_activity_current_stage", fields: [current_stage], references: [id])
   ticket_activity_ticket_revision_id ticket_revision @relation("ticket_activity_ticket_revision_id", fields: [ticket_revision_id], references: [id])
+}
+
+model ticket_types {
+  id              String    @id @default(uuid())
+  status          Int       @default(0) // 0 open 1 closed
+  label           String
+  created_by      String?
+  updated_by      String?
+  created_at      DateTime? @default(now())
+  updated_at      DateTime? @updatedAt
+  organisation_id String
+  ticket_type_organisation_id       organisation?     @relation("ticket_type_organisation_id", fields: [organisation_id], references: [id])
+  ticket_type_created_by            user?             @relation("ticket_type_created_by", fields: [created_by], references: [id])
+  ticket_type_updated_by            user?             @relation("ticket_type_updated_by", fields: [updated_by], references: [id])
+  ticket_id                         ticket[]          @relation("ticket_type_id_fk")
 }

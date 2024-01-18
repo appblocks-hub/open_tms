@@ -58,7 +58,9 @@
       "directory": "open_tms_get_ticket_activity_logs"
     },
     "open_tms_remove_org_user": {
-      "directory": "open_tms_remove_org_user"
-    }
+      "directory": "open_tms_remove_org_user"},
+    "open_tms_add_user_to_organisation": {
+      "directory": "open_tms_add_user_to_organisation"
+}
   }
 }
