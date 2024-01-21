@@ -30,6 +30,7 @@ import jwt from "jsonwebtoken";
  *         description: Ok
  */
 const handler = async ({ req, res }) => {
+  console.log('Got here')
   const { sendResponse, isEmpty, prisma, validateRequestMethod, checkHealth } =
     await shared.getShared();
 
@@ -92,20 +93,20 @@ const handler = async ({ req, res }) => {
       is_email_verified: user_account.is_email_verified,
     };
 
-    const secretKey = process.env.BB_OPEN_TMS_SECRET_KEY;
-    const refreshKey = process.env.BB_OPEN_TMS_REFRESH_KEY;
-    console.log("secrete key ", secretKey);
+    const secretKey = process.env.BB_OPEN_TMS_AUTH_SECRET_KEY;
+    const refreshKey = process.env.BB_OPEN_TMS_AUTH_REFRESH_KEY;
+    console.log("secret key ", secretKey);
     console.log("refreshKey key ", refreshKey);
 
     const userResponse = {
       token: jwt.sign(tokenGenerate, secretKey, {
-        expiresIn: process.env.BB_OPEN_TMS_ACCESS_TOKEN_EXPIRY,
+        expiresIn: process.env.BB_OPEN_TMS_AUTH_ACCESS_TOKEN_EXPIRY,
       }),
       refreshToken: jwt.sign(tokenGenerate, refreshKey, {
-        expiresIn: process.env.BB_OPEN_TMS_REFRESH_TOKEN_EXPIRY,
+        expiresIn: process.env.BB_OPEN_TMS_AUTH_REFRESH_TOKEN_EXPIRY,
       }),
       refreshExpiry: parseInt(
-        process.env.BB_OPEN_TMS_REFRESH_TOKEN_EXPIRY.slice(0, -1),
+        process.env.BB_OPEN_TMS_AUTH_REFRESH_TOKEN_EXPIRY.slice(0, -1),
         10
       ),
     };
@@ -114,7 +115,7 @@ const handler = async ({ req, res }) => {
 
     sendResponse(res, 200, { data: userResponse, message: "Success" });
   } catch (e) {
-    console.log(e.message);
+    console.error(e.message);
     return sendResponse(res, e.errorCode ? e.errorCode : 500, {
       message: e.errorCode < 500 ? e.message : "something went wrong",
     });
